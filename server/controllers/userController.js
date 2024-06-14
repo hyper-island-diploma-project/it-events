@@ -3,6 +3,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User, Basket } = require("../models/models");
 
+const generateJwt = (id, email) => {
+  return jwt.sign({ id, email }, process.env.SECRET_KEY, { expiresIn: "24h" });
+};
+
 class userController {
   async registration(req, res, next) {
     const {
@@ -40,7 +44,7 @@ class userController {
 
     const candidate = await User.findOne({ where: { email } });
     if (candidate) {
-      return next(ApiError.badRequest("A user with this email already exists"));
+      return next(ApiError.badRequest("User with this email already exists"));
     }
     const hashPassword = await bcrypt.hash(password, 5);
     const user = await User.create({
@@ -54,24 +58,29 @@ class userController {
       image,
     });
     const basket = await Basket.create({ userId: user.id });
-    const token = jwt.sign(
-      { userId: user.id, email: user.email },
-      process.env.SECRET_KEY,
-      { expiresIn: "24h" }
-    );
+    const token = generateJwt(user.id, user.email);
     return res.json({ token });
   }
 
-  async login(req, res) {}
+  async login(req, res, next) {
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return next(ApiError.badRequest("Something went wrong"));
+    }
+    let passwordComparison = bcrypt.compareSync(password, user.password);
+    if (!passwordComparison) {
+      return next(ApiError.badRequest("Something went wrong"));
+    }
+    const token = generateJwt(user.id, user.email);
+    return res.json({ token });
+  }
 
   async edit(req, res) {}
 
   async check(req, res, next) {
-    const { id } = req.query;
-    if (!id) {
-      return next(ApiError.badRequest("id is not specified"));
-    }
-    res.json(id);
+    const token = generateJwt(req.user.id, req.user.email);
+    return res.json({ token });
   }
 }
 
