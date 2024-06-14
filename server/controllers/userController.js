@@ -46,10 +46,10 @@ class userController {
     if (candidate) {
       return next(ApiError.badRequest("User with this email already exists"));
     }
-    const hashPassword = await bcrypt.hash(password, 5);
+    const hashedPassword = await bcrypt.hash(password, 5);
     const user = await User.create({
       email,
-      password: hashPassword,
+      password: hashedPassword,
       first_name,
       last_name,
       job_title,
@@ -59,7 +59,7 @@ class userController {
     });
     const basket = await Basket.create({ userId: user.id });
     const token = generateJwt(user.id, user.email);
-    return res.json({ token });
+    return res.json({ token, id: user.id });
   }
 
   async login(req, res, next) {
@@ -73,10 +73,45 @@ class userController {
       return next(ApiError.badRequest("Something went wrong"));
     }
     const token = generateJwt(user.id, user.email);
-    return res.json({ token });
+    return res.json({ token, id: user.id  });
   }
 
-  async edit(req, res) {}
+  async editProfile(req, res, next) {
+    const { id } = req.params;
+    const {
+      email,
+      password,
+      first_name,
+      last_name,
+      job_title,
+      workplace,
+      experience,
+      image,
+    } = req.body;
+
+    try {
+      const user = await User.findOne({ where: { id } });
+      if (!user) {
+        return next(ApiError.badRequest("User not found"));
+      }
+
+      // update user data
+      const hashedPassword = await bcrypt.hash(password, 5);
+      if (email) user.email = email;
+      if (password) user.password = hashedPassword;
+      if (first_name) user.first_name = first_name;
+      if (last_name) user.last_name = last_name;
+      if (job_title) user.job_title = job_title;
+      if (workplace) user.workplace = workplace;
+      if (experience) user.experience = experience;
+      if (image) user.image = image;
+
+      await user.save();
+      return res.json(user);
+    } catch (error) {
+      return next(ApiError.internal("Something went wrong"));
+    }
+  }
 
   async check(req, res, next) {
     const token = generateJwt(req.user.id, req.user.email);
