@@ -11,6 +11,7 @@ const User = sequelize.define("user", {
   workplace: { type: DataTypes.STRING, allowNull: false },
   experience: { type: DataTypes.STRING, allowNull: false },
   image: { type: DataTypes.STRING, allowNull: false },
+  role: { type: DataTypes.STRING, defaultValue: "USER" },
 });
 
 const Basket = sequelize.define("basket", {
@@ -24,11 +25,13 @@ const BasketEvent = sequelize.define("basket_event", {
 const Event = sequelize.define("event", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   title: { type: DataTypes.STRING, allowNull: false },
+  //должен быть массив из города и адреса
   location: { type: DataTypes.STRING, allowNull: false },
   format_online: { type: DataTypes.BOOLEAN, allowNull: false },
   format_onsite: { type: DataTypes.BOOLEAN, allowNull: false },
   participation_requirements: { type: DataTypes.STRING, allowNull: false },
   date: { type: DataTypes.DATE, allowNull: false },
+  // должен быть массив из нескольких спикеров с привязкой к расписанию
   topic: { type: DataTypes.STRING, allowNull: false },
   available_seats: { type: DataTypes.INTEGER, allowNull: false },
   description: { type: DataTypes.STRING, allowNull: false },
@@ -49,10 +52,10 @@ const Organizer = sequelize.define("organizer", {
   image: { type: DataTypes.STRING, allowNull: false },
 });
 
-const EventOrganizer = sequelize.define("organizer_event", {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  role: { type: DataTypes.ENUM("speaker", "expert", "host"), allowNull: false },
-});
+// const EventOrganizer = sequelize.define("organizer_event", {
+//   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+//   role: { type: DataTypes.ENUM("speaker", "expert", "host"), allowNull: false },
+// });
 
 const EventTimeSlot = sequelize.define("event_time_slot", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -61,27 +64,35 @@ const EventTimeSlot = sequelize.define("event_time_slot", {
   is_rest: { type: DataTypes.BOOLEAN, allowNull: false },
 });
 
-const EventEventOrganizer = sequelize.define("event_eventOrganizer", {
+const EventOrganizer = sequelize.define("event_organizer", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
+//
+Basket.hasOne(User);
+User.belongsTo(Basket);
+//
+
 Basket.hasMany(BasketEvent);
 BasketEvent.belongsTo(Basket);
 
-BasketEvent.hasOne(Event);
-Event.belongsTo(BasketEvent);
+Event.hasMany(BasketEvent);
+BasketEvent.belongsTo(Event);
 
 Event.hasMany(EventTimeSlot);
 EventTimeSlot.belongsTo(Event);
 
-Organizer.hasMany(EventOrganizer);
-EventOrganizer.belongsTo(Organizer);
+Event.belongsToMany(Organizer, { through: EventOrganizer });
+Organizer.belongsToMany(Event, { through: EventOrganizer });
 
-Event.belongsToMany(EventOrganizer, { through: EventEventOrganizer });
-EventOrganizer.belongsToMany(Event, { through: EventEventOrganizer });
+// Organizer.hasMany(EventOrganizer);
+// EventOrganizer.belongsTo(Organizer);
+
+// Event.belongsToMany(EventOrganizer, { through: EventEventOrganizer });
+// EventOrganizer.belongsToMany(Event, { through: EventEventOrganizer });
 
 module.exports = {
   User,
@@ -89,6 +100,5 @@ module.exports = {
   BasketEvent,
   Event,
   Organizer,
-  OrganizerEvent: EventOrganizer,
   EventTimeSlot,
 };

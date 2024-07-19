@@ -57,7 +57,7 @@ class userController {
       experience,
       image,
     });
-    const basket = await Basket.create({ userId: user.id });
+    // const basket = await Basket.create({ userId: user.id }); // ?
     const token = generateJwt(user.id, user.email);
     return res.json({ token, id: user.id });
   }
