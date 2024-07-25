@@ -3,7 +3,11 @@ const { DataTypes } = require("sequelize");
 
 const User = sequelize.define("user", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  email: { type: DataTypes.STRING, unique: true, allowNull: false },
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
   password: { type: DataTypes.STRING, allowNull: false },
   first_name: { type: DataTypes.STRING, allowNull: false },
   last_name: { type: DataTypes.STRING, allowNull: false },
@@ -67,6 +71,10 @@ const Agenda = sequelize.define("agenda", {
   speaker_about: { type: DataTypes.STRING, allowNull: true },
 });
 
+const EventHost = sequelize.define("event_host", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
@@ -81,8 +89,10 @@ BasketEvent.belongsTo(Basket);
 Event.hasMany(BasketEvent);
 BasketEvent.belongsTo(Event);
 
-Host.hasMany(Event);
-Event.belongsTo(Host);
+// Host.hasMany(Event);
+// Event.belongsTo(Host);
+Host.belongsToMany(Event, { through: EventHost });
+Event.belongsToMany(Host, { through: EventHost });
 
 Event.hasMany(EventInfo, { as: "info" });
 EventInfo.belongsTo(Event);
@@ -97,5 +107,6 @@ module.exports = {
   Event,
   Host,
   EventInfo,
+  EventHost,
   Agenda,
 };
