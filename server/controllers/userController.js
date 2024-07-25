@@ -4,7 +4,9 @@ const jwt = require("jsonwebtoken");
 const { User, Basket } = require("../models/models");
 
 const generateJwt = (id, email, role) => {
-  return jwt.sign({ id, email, role }, process.env.SECRET_KEY, { expiresIn: "24h" });
+  return jwt.sign({ id, email, role }, process.env.SECRET_KEY, {
+    expiresIn: "24h",
+  });
 };
 
 class userController {
@@ -42,43 +44,63 @@ class userController {
     if (!experience) {
       return next(ApiError.badRequest("Incorrect experience"));
     }
+    try {
+      const candidate = await User.findOne({ where: { email } });
+      if (candidate) {
+        return next(ApiError.badRequest("User with this email already exists"));
+      }
+      const hashedPassword = await bcrypt.hash(password, 5);
+      const user = await User.create({
+        email,
+        password: hashedPassword,
+        first_name,
+        last_name,
+        job_title,
+        workplace,
+        experience,
+        image,
+        role,
+      });
 
-    const candidate = await User.findOne({ where: { email } });
-    if (candidate) {
-      return next(ApiError.badRequest("User with this email already exists"));
+      const basket = await Basket.create({ userId: user.id });
+
+      const token = generateJwt(user.id, user.email, user.role);
+
+      return res.json({ token, id: user.id });
+    } catch (error) {
+      console.error(error);
+      return next(ApiError.internal("Something went wrong"));
     }
-    const hashedPassword = await bcrypt.hash(password, 5);
-    const user = await User.create({
-      email,
-      password: hashedPassword,
-      first_name,
-      last_name,
-      job_title,
-      workplace,
-      experience,
-      image,
-      role,
-    });
-
-    const basket = await Basket.create({ userId: user.id });
-
-    const token = generateJwt(user.id, user.email, user.role);
-
-    return res.json({ token, id: user.id });
   }
 
   async login(req, res, next) {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-      return next(ApiError.badRequest("A user with this email or password was not found"));
+
+    if (!email) return next(ApiError.badRequest("Email is required"));
+    if (!password) return next(ApiError.badRequest("Password is required"));
+
+    try {
+      const user = await User.findOne({ where: { email } });
+      if (!user) {
+        return next(
+          ApiError.badRequest(
+            // "A user with this email or password was not found"
+            "A user with this email  was not found"
+          )
+        );
+      }
+      let passwordComparison = bcrypt.compareSync(password, user.password);
+      if (!passwordComparison) {
+        return next(
+          ApiError.badRequest("A user with this password was not found")
+        );
+      }
+      const token = generateJwt(user.id, user.email, user.role);
+      return res.json({ token, id: user.id });
+    } catch (error) {
+      console.error(error);
+      return next(ApiError.internal("Something went wrong"));
     }
-    let passwordComparison = bcrypt.compareSync(password, user.password);
-    if (!passwordComparison) {
-      return next(ApiError.badRequest("A user with this email or password was not found"));
-    }
-    const token = generateJwt(user.id, user.email);
-    return res.json({ token, id: user.id  });
   }
 
   async editProfile(req, res, next) {
@@ -100,10 +122,19 @@ class userController {
         return next(ApiError.badRequest("User not found"));
       }
 
-      // update user data
-      const hashedPassword = await bcrypt.hash(password, 5);
-      if (email) user.email = email;
-      if (password) user.password = hashedPassword;
+      if (email && email !== user.email) {
+        const userEmail = await User.findOne({ where: { email } });
+        if (userEmail) {
+          return next(ApiError.badRequest("This email already exists"));
+        }
+        user.email = email;
+      }
+
+      if (password) {
+        const hashedPassword = await bcrypt.hash(password, 5);
+        user.password = hashedPassword;
+      }
+
       if (first_name) user.first_name = first_name;
       if (last_name) user.last_name = last_name;
       if (job_title) user.job_title = job_title;
@@ -114,13 +145,57 @@ class userController {
       await user.save();
       return res.json(user);
     } catch (error) {
+      console.error(error);
+      return next(ApiError.internal("Something went wrong"));
+    }
+  }
+
+  async getAll(req, res, next) {
+    try {
+      const users = await User.findAll();
+      return res.json(users);
+    } catch (error) {
+      console.error(error);
+      return next(ApiError.internal("Something went wrong"));
+    }
+  }
+
+  async getOne(req, res) {
+    const { id } = req.params;
+    try {
+      const user = await User.findOne({
+        where: { id },
+      });
+      return res.json(user);
+    } catch (error) {
+      console.error(error);
+      return next(ApiError.internal("Something went wrong"));
+    }
+  }
+
+  async delete(req, res, next) {
+    const { id } = req.params;
+    try {
+      const user = await User.findOne({ where: { id } });
+      if (!user) {
+        return next(ApiError.badRequest("User not found"));
+      }
+      await user.destroy();
+
+      return res.json({ message: "User deleted successfully" });
+    } catch (error) {
       return next(ApiError.internal("Something went wrong"));
     }
   }
 
   async check(req, res, next) {
-    const token = generateJwt(req.user.id, req.user.email, req.user.role);
-    return res.json({ token });
+    try {
+      const token = generateJwt(req.user.id, req.user.email, req.user.role);
+      return res.json({ token });
+    } catch (error) {
+      console.error(error);
+      return next(ApiError.internal("Something went wrong"));
+    }
   }
 }
 
