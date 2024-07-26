@@ -18,13 +18,17 @@ const User = sequelize.define("user", {
   role: { type: DataTypes.STRING, defaultValue: "USER" },
 });
 
-const Basket = sequelize.define("basket", {
+const UserSubscription = sequelize.define("user_subscription", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-const BasketEvent = sequelize.define("basket_event", {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-});
+// const Basket = sequelize.define("basket", {
+//   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+// });
+
+// const BasketEvent = sequelize.define("basket_event", {
+//   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+// });
 
 const Event = sequelize.define("event", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -75,22 +79,29 @@ const EventHost = sequelize.define("event_host", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-User.hasOne(Basket);
-Basket.belongsTo(User);
+// User.hasOne(Basket);
+// Basket.belongsTo(User);
 
-//
-Basket.hasOne(User);
-User.belongsTo(Basket);
-//
+// //
+// Basket.hasOne(User);
+// User.belongsTo(Basket);
+// //
 
-Basket.hasMany(BasketEvent);
-BasketEvent.belongsTo(Basket);
+// Basket.hasMany(BasketEvent);
+// BasketEvent.belongsTo(Basket);
 
-Event.hasMany(BasketEvent);
-BasketEvent.belongsTo(Event);
+// Event.hasMany(BasketEvent);
+// BasketEvent.belongsTo(Event);
 
 // Host.hasMany(Event);
 // Event.belongsTo(Host);
+
+User.hasMany(UserSubscription);
+UserSubscription.belongsTo(User);
+
+Event.hasMany(UserSubscription);
+UserSubscription.belongsTo(Event);
+
 Host.belongsToMany(Event, { through: EventHost });
 Event.belongsToMany(Host, { through: EventHost });
 
@@ -102,11 +113,12 @@ Agenda.belongsTo(Event);
 
 module.exports = {
   User,
-  Basket,
-  BasketEvent,
+  // Basket,
+  // BasketEvent,
   Event,
   Host,
   EventInfo,
   EventHost,
   Agenda,
+  UserSubscription,
 };
