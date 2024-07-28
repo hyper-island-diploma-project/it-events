@@ -49,7 +49,7 @@ class HostController {
       const { image } = req.files;
       fileName = uuid.v4() + ".jpg";
       try {
-        await image.mv(path.resolve(__dirname, "..", "static", fileName));
+        await image.mv(path.resolve(__dirname, "..", "static", "hosts", fileName));
       } catch (error) {
         console.error(error);
         return next(ApiError.internal("Something went wrong"));
