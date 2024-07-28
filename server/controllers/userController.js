@@ -1,4 +1,6 @@
 const ApiError = require("../error/ApiError");
+const uuid = require("uuid");
+const path = require("path");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models/models");
@@ -19,9 +21,12 @@ class userController {
       job_title,
       workplace,
       experience,
-      image,
       role,
     } = req.body;
+
+    const { image } = req.files;
+    let fileName = uuid.v4() + ".jpg";
+    image.mv(path.resolve(__dirname, "..", "static", "users", fileName));
 
     if (!email) {
       return next(ApiError.badRequest("Incorrect email"));
@@ -58,11 +63,9 @@ class userController {
         job_title,
         workplace,
         experience,
-        image,
         role,
+        image: fileName,
       });
-
-      // const basket = await Basket.create({ userId: user.id });
 
       const token = generateJwt(user.id, user.email, user.role);
 

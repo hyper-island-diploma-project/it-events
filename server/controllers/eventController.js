@@ -23,8 +23,8 @@ class eventController {
       } = req.body;
 
       const { image } = req.files;
-      let fileName = uuid.v4() + ".jpg";
-      image.mv(path.resolve(__dirname, "..", "static", fileName));
+      let fileName = uuid.v4() + ".svg";
+      image.mv(path.resolve(__dirname, "..", "static", "events", fileName));
 
       const event = await Event.create({
         title,
