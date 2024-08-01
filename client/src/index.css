@@ -4,10 +4,22 @@
 
 @layer base {
   body {
+    @apply mx-auto max-w-[1280px];
   }
 
   li,
   button {
     @apply cursor-pointer;
+  }
+
+  h2 {
+    @apply text-2xl font-medium mb-4;
+  }
+
+}
+
+@layer components {
+  .tabBarItem {
+    @apply grid grid-cols-[28px_auto] grid-rows-1 items-center justify-start gap-2;
   }
 }
