@@ -3,12 +3,14 @@ import EventModel from '../../models/EventModel';
 
 export interface IEventsProvider {
   getAllEvents: () => void;
-  eventList: EventModel[],
+  upcomingEvents: EventModel[];
+  pastEvents: EventModel[];
 }
 
 const EventsContext = createContext<IEventsProvider>({
   getAllEvents: () => null,
-  eventList: [],
+  upcomingEvents: [],
+  pastEvents: [],
 });
 
 export default EventsContext;

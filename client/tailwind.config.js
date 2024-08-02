@@ -10,6 +10,7 @@ export default {
         blueAccent: '#1D6BF3',
         black: '#1A1B22',
         yellow: '#FFDC4A',
+        lightGray: '#F6F6F6',
       },
     },
   },

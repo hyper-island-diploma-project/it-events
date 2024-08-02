@@ -1,4 +1,4 @@
-const Hero = () => {
+const HeroMain = () => {
   return (
     <section className="relative w-full rounded-[20px] bg-black p-8 overflow-hidden my-6">
       <img src="/hero-img.svg" alt="" className="absolute -bottom-[50px] -right-[100px] " />
@@ -25,4 +25,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default HeroMain;
