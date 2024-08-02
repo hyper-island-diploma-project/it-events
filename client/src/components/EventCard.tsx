@@ -1,7 +1,11 @@
 import { FC } from 'react';
 import { API_URL } from '../utils/utils';
+
 import EventModel from '../models/EventModel';
 import { CiHeart } from 'react-icons/ci';
+// import { format } from 'date-fns';
+import {formatInTimeZone} from 'date-fns-tz'
+
 
 const BASE_URL = API_URL;
 
@@ -10,6 +14,13 @@ interface EventProps {
 }
 
 const EventCard: FC<EventProps> = ({ event }) => {
+  // Исходная дата в формате ISO
+const eventDate = new Date(event.date);
+
+const formattedDate = formatInTimeZone(eventDate, 'UTC',  'dd-MM-yyyy')
+// Преобразование даты в нужный формат
+// const formattedDate = format(eventDate, 'yyyy-MM-dd');
+
   const onlineFormat = () => {
     if (event.format_online === false) {
       return null;
@@ -52,6 +63,7 @@ const EventCard: FC<EventProps> = ({ event }) => {
   };
 
   return (
+
     <li
       style={{
         background: `${event.bg_color}`,
@@ -73,16 +85,10 @@ const EventCard: FC<EventProps> = ({ event }) => {
         </p>
         <p className="mb-3 text-[12px]">Lead frontend dev</p>
         <p className="mb-3 text-[16px]">
-          {new Date(event.date)
-            .toLocaleDateString('en-GB', {
-              year: 'numeric',
-              month: 'numeric',
-              day: 'numeric',
-            })
-            .split('/')
-            .join('/')}
+          {/* {new Date(event.date).toLocaleDateString()} */}
+          {formattedDate}
         </p>
-        <div className="item-center flex z-10">
+        <div className="item-center z-10 flex">
           <button
             style={{
               borderColor: `${event.text_color}`,
@@ -100,7 +106,6 @@ const EventCard: FC<EventProps> = ({ event }) => {
         </div>
       </div>
       <img
-        // src="/event-img-2.svg"
         src={`${BASE_URL}/${event.image}`}
         alt="event icon"
         className="absolute bottom-0 right-0"
