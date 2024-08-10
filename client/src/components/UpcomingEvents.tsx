@@ -1,14 +1,14 @@
-import useEventsList from '../providers/EventsProvider/EventsProvider.hook';
+import useEvents from '../providers/EventsProvider/EventsProvider.hook';
 import EventCard from './EventCard';
 import FilterItems from './FilterItems';
 
 const UpcomingEvents = () => {
-  const { upcomingEvents } = useEventsList();
+  const { upcomingEvents } = useEvents();
 
   return (
     <>
       <FilterItems />
-      <section className=' mb-6'>
+      <section className="mb-6">
         <h2>Upcoming events</h2>
         <ul className="grid grid-cols-4 gap-5">
           {upcomingEvents.length === 0 ? (
@@ -16,7 +16,7 @@ const UpcomingEvents = () => {
           ) : (
             upcomingEvents &&
             upcomingEvents.map((event) => (
-              <EventCard key={event.id} event={event} />
+              <EventCard event={event} key={event.id} />
             ))
           )}
         </ul>

@@ -13,3 +13,13 @@ export const getEventList = () => {
   }).then(checkResponse);
   return response;
 };
+
+export const getEventById = (id: number) => {
+  const response = fetch(`${BASE_URL}/api/event/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(checkResponse);
+  return response;
+};

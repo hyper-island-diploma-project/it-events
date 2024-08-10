@@ -14,7 +14,8 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const [allEvents, setAllEvents] = useState<EventModel[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<EventModel[]>([]);
-  const [pastEvents, setPasrEvents] = useState<EventModel[]>([]);
+  const [pastEvents, setPastEvents] = useState<EventModel[]>([]);
+  // const [currentEvent, setCurrentEvent] = useState<EventModel | undefined>(undefined);
 
   const getAllEvents = async () => {
     try {
@@ -30,7 +31,6 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
       getAllEvents().then((data) => setAllEvents(data));
     }
   }, [allEvents]);
-
 
   useEffect(() => {
     const now = new Date();
@@ -51,13 +51,26 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     setUpcomingEvents(futureEvents);
-    setPasrEvents(pastEvents);
+    setPastEvents(pastEvents);
   }, [allEvents]);
+
+  const getOneEvent = async (id: number) => {
+    try {
+      const event = await eventApi.getEventById(id);
+      return event;
+    } catch (error) {
+      console.error('Error fetching event:', error);
+      return null;
+    }
+  };
+
 
   const value = {
     getAllEvents,
     upcomingEvents,
     pastEvents,
+    getOneEvent,
+    // currentEvent,
   };
 
   return (
