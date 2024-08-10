@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply mx-auto max-w-[1280px];
+    @apply mx-auto max-w-[1280px] text-pretty;
   }
 
   button {

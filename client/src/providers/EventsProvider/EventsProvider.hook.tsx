@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import EventsProviderContext, {IEventsProvider} from './EventsProvider.context'
 
-const useEventsList = (): IEventsProvider => {
+const useEvents = (): IEventsProvider => {
   return useContext(EventsProviderContext);
 };
 
-export default useEventsList;
+export default useEvents;

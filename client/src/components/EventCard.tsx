@@ -1,11 +1,11 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../utils/utils';
 
 import EventModel from '../models/EventModel';
 import { CiHeart } from 'react-icons/ci';
-// import { format } from 'date-fns';
-import {formatInTimeZone} from 'date-fns-tz'
-
+import { formatInTimeZone } from 'date-fns-tz';
+import EventFormat from './EventFormat';
 
 const BASE_URL = API_URL;
 
@@ -14,68 +14,29 @@ interface EventProps {
 }
 
 const EventCard: FC<EventProps> = ({ event }) => {
-  // Исходная дата в формате ISO
-const eventDate = new Date(event.date);
+  const navigate = useNavigate();
 
-const formattedDate = formatInTimeZone(eventDate, 'UTC',  'dd-MM-yyyy')
-// Преобразование даты в нужный формат
-// const formattedDate = format(eventDate, 'yyyy-MM-dd');
-
-  const onlineFormat = () => {
-    if (event.format_online === false) {
-      return null;
-    } else {
-      return (
-        <div className="mr-3 flex items-center">
-          <div className="mr-1 h-2 w-2 rounded-full bg-green-500"></div>
-          <p>Online</p>
-        </div>
-      );
-    }
+  const handleClick = () => {
+    navigate(`/event/${event.id}`);
   };
 
-  const onsiteFormat = () => {
-    if (event.format_onsite === false) {
-      return null;
-    } else {
-      return (
-        <div className="mr-3 flex items-center">
-          <div className="mr-1 h-2 w-2 rounded-full bg-red-600"></div>
-          <p>{event.city}</p>
-        </div>
-      );
-    }
-  };
+  const eventDate = new Date(event.date);
 
-  const amountOfPlaces = () => {
-    if (event.available_seats === 0) {
-      return null;
-    } else {
-      return (
-        <div className="flex items-center">
-          <div className="mr-1 h-2 w-2 rounded-full bg-orange-600"></div>
-          <p>
-            <span>{event.available_seats}</span> places left
-          </p>
-        </div>
-      );
-    }
-  };
+  const formattedDate = formatInTimeZone(eventDate, 'UTC', 'dd-MM-yyyy');
 
   return (
-
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <li
+      onClick={handleClick}
       style={{
         background: `${event.bg_color}`,
         color: `${event.text_color}`,
       }}
-      className="relative flex h-[267px] w-[305px] flex-col justify-between rounded-[20px] border-[0.5px] border-stone-300 p-3"
+      className="relative flex h-[267px] cursor-pointer flex-col justify-between rounded-[20px] border-[0.5px] border-stone-300 p-3"
     >
       <div className="flex flex-col">
         <div className="mb-3 flex w-full items-center text-sm">
-          {onsiteFormat()}
-          {onlineFormat()}
-          {amountOfPlaces()}
+          <EventFormat event={event} />
         </div>
         <h5 className="text-xl">{event.title}</h5>
       </div>
@@ -85,7 +46,6 @@ const formattedDate = formatInTimeZone(eventDate, 'UTC',  'dd-MM-yyyy')
         </p>
         <p className="mb-3 text-[12px]">Lead frontend dev</p>
         <p className="mb-3 text-[16px]">
-          {/* {new Date(event.date).toLocaleDateString()} */}
           {formattedDate}
         </p>
         <div className="item-center z-10 flex">

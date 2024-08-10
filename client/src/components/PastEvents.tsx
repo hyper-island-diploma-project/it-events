@@ -1,14 +1,14 @@
-import useEventsList from '../providers/EventsProvider/EventsProvider.hook';
+import useEvents from '../providers/EventsProvider/EventsProvider.hook';
 import EventCard from './EventCard';
 
 const PastEvents = () => {
-  const { pastEvents } = useEventsList();
+  const { pastEvents } = useEvents();
 
   return (
     <>
       <section>
         <h2>Completed</h2>
-        <ul className="grid grid-cols-4 gap-5">
+        <ul className="grid grid-cols-2 gap-5">
           {pastEvents.length === 0 ? (
             <li>No events</li>
           ) : (
