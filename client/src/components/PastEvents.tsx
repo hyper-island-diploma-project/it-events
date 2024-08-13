@@ -6,7 +6,7 @@ const PastEvents = () => {
 
   return (
     <>
-      <section>
+      <section className=' mb-24'>
         <h2>Completed</h2>
         <ul className="grid grid-cols-2 gap-5">
           {pastEvents.length === 0 ? (

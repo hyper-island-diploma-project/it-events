@@ -1,7 +1,7 @@
 // to create uniq image id
 const uuid = require("uuid");
 const path = require("path");
-const { Event, EventInfo, Agenda } = require("../models/models.js");
+const { Event, EventInfo, Agenda, Host } = require("../models/models.js");
 const ApiError = require("../error/ApiError.js");
 
 class eventController {
@@ -113,6 +113,7 @@ class eventController {
         include: [
           { model: EventInfo, as: "info" },
           { model: Agenda, as: "agenda" },
+          { model: Host, as: "hosts" },
         ],
       });
       return res.json(event);

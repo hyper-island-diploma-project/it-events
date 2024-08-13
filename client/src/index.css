@@ -13,7 +13,7 @@
   
 
   h2 {
-    @apply mb-4 text-2xl font-medium;
+    @apply mb-8 text-2xl font-medium;
   }
 }
 

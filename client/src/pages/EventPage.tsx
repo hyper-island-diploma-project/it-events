@@ -4,6 +4,11 @@ import EventModel from '../models/EventModel';
 import useEvents from '../providers/EventsProvider/EventsProvider.hook';
 import HeroEvent from '../components/HeroEvent';
 import EventDetails from '../components/EventDetails';
+import EventHosts from '../components/EventHosts';
+import EventProgram from '../components/EventProgram';
+import EventLocation from '../components/EventLocation';
+import EventRegistrationButton from '../components/EventRegistrationButton';
+import RegistrationForm from '../components/RegistrationForm';
 
 function EventPage() {
   const { id } = useParams<{ id: string }>();
@@ -28,6 +33,11 @@ function EventPage() {
         <>
           <HeroEvent event={event} />
           <EventDetails event={event} />
+          <EventHosts event={event} />
+          <EventProgram event={event} />
+          <EventLocation event={event} />
+          <EventRegistrationButton />
+          <RegistrationForm />
         </>
       ) : (
         <p>Event not found</p>

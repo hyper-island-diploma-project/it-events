@@ -10,7 +10,7 @@ class HostController {
 
     const { image } = req.files;
     let fileName = uuid.v4() + ".jpg";
-    image.mv(path.resolve(__dirname, "..", "static", fileName));
+    image.mv(path.resolve(__dirname, "..", "static", "hosts", fileName));
 
     const host = await Host.create({
       first_name,
