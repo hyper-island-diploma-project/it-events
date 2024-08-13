@@ -3,9 +3,31 @@ type InfoItem = {
   description: string;
   address: string;
   requirements: string;
-  createdAt: string;
-  updatedAt: string;
   eventId: number;
+};
+
+type Hosts = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  job_title: string;
+  about: string;
+  image: string;
+};
+
+type AgendaItem = {
+  id: number;
+  time: string;
+  title: string;
+  subtitle: string | null;
+  is_rest: boolean;
+  speaker_name: string | null;
+  speaker_job: string | null;
+  speaker_about: string | null;
+};
+
+type Agenda = {
+  agenda: AgendaItem[];
 };
 
 type EventModel = {
@@ -23,8 +45,8 @@ type EventModel = {
   createdAt?: string;
   updatedAt?: string;
   info?: InfoItem[];
-  // description?: string;
+  hosts?: Hosts[];
+  agenda?: Agenda[];
 };
-
 
 export default EventModel;

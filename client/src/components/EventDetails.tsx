@@ -46,7 +46,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
   };
 
   return (
-    <ul className="mb-8 mt-10 grid grid-cols-[450px_200px_1fr] gap-10 border-b border-t border-dashed border-black pb-4 pt-10">
+    <ul className="my-12 grid grid-cols-[450px_200px_1fr] gap-10 border-b border-t border-dashed border-black pb-4 pt-10">
       <li>
         <p className="mb-3 text-xl">
           <span className="mr-3 font-medium">01/</span>Where:
