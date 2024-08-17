@@ -10,7 +10,6 @@
   button {
     @apply cursor-pointer;
   }
-  
 
   h2 {
     @apply mb-8 text-2xl font-medium;
@@ -23,10 +22,18 @@
   }
 
   .filterButton {
-    @apply rounded-full border border-stone-200 py-[6px] flex items-center justify-center text-stone-400;
+    @apply flex items-center justify-center rounded-full border border-stone-200 py-[6px] text-stone-400;
   }
 
   .pageName {
-    @apply text-stone-400 text-[16px] mt-14;
+    @apply mt-14 text-[16px] text-stone-400;
+  }
+
+  .input_auth_form {
+    @apply w-full rounded-xl border border-stone-400 bg-white px-3 py-2 text-sm;
+  }
+
+  .button_auth_form {
+    @apply mb-6 flex w-full cursor-pointer items-center justify-center rounded-xl bg-blueAccent px-3 py-2 text-white;
   }
 }

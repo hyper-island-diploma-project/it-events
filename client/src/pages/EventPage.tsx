@@ -8,7 +8,7 @@ import EventHosts from '../components/EventHosts';
 import EventProgram from '../components/EventProgram';
 import EventLocation from '../components/EventLocation';
 import EventRegistrationButton from '../components/EventRegistrationButton';
-import RegistrationForm from '../components/RegistrationForm';
+// import RegistrationForm from '../components/RegistrationForm';
 
 function EventPage() {
   const { id } = useParams<{ id: string }>();
@@ -37,7 +37,7 @@ function EventPage() {
           <EventProgram event={event} />
           <EventLocation event={event} />
           <EventRegistrationButton />
-          <RegistrationForm />
+          {/* <RegistrationForm /> */}
         </>
       ) : (
         <p>Event not found</p>

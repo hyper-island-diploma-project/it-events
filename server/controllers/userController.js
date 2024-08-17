@@ -193,13 +193,21 @@ class userController {
 
   async check(req, res, next) {
     try {
-      const token = generateJwt(req.user.id, req.user.email, req.user.role);
-      return res.json({ token });
+      const token = req.headers.authorization.split(" ")[1];
+      if (!token) {
+        return next(ApiError.unauthorized("Token is missing"));
+      }
+
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      req.user = decoded;
+      return res.json( { message: "Token is valid", user: req.user });
     } catch (error) {
       console.error(error);
-      return next(ApiError.internal("Something went wrong"));
+      return next(ApiError.unauthorized("Token is invalid or expired"));
     }
   }
+
+
 }
 
 module.exports = new userController();

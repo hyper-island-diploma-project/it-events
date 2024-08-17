@@ -1,59 +1,62 @@
 import { API_URL } from '../utils/utils';
-// import checkResponse from './checkResponse';
+import checkResponse from './checkResponse';
 
 export const BASE_URL = API_URL;
 
-// export const register = (
-//   firstName: string,
-//   lastName: string,
-//   email: string,
-//   password: string,
-// ) => {
-//   return fetch(`${BASE_URL}/v1/users`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ firstName, lastName, email, password }),
-//   }).then(checkResponse);
-// };
+export const register = (
+  first_name: string,
+  last_name: string,
+  email: string,
+  password: string,
+  job_title: string,
+  workplace: string,
+  experience: string,
+) => {
+  return fetch(`${BASE_URL}/api/user/registration`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      first_name,
+      last_name,
+      email,
+      password,
+      job_title,
+      workplace,
+      experience,
+    }),
+  }).then(checkResponse);
+};
 
-// export const login = (email: string, password: string) => {
-//   return fetch(`${BASE_URL}/v1/users/login`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ email, password }),
-//   })
-//     .then(checkResponse)
-//     .then((data) => {
-//       if (data.token) {
-//         return data;
-//       }
-//     });
-// };
+export const login = (email: string, password: string) => {
+  return fetch(`${BASE_URL}/api/user/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+  })
+    .then(checkResponse)
+    .then((data) => {
+      if (data.token) {
+        return data;
+      }
+    });
+};
 
-// export const check = (token: string) => {
-//   return fetch(`${BASE_URL}/v1/users/token/verify`, {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${token}`,
-//     },
-//   })
-//     .then(checkResponse)
-//     .then((data) => data);
-// };
-
-// export const editProfile = (firstName: string, email: string, jwt: string | null) => {
-//   return fetch(`${BASE_URL}/v1/users/:id`, {
-//     method: 'PATCH',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${jwt}`,
-//     },
-//     body: JSON.stringify({firstName, email})
-//   })
-//     .then(checkResponse)
-// };
+export const check = (token: string) => {
+  return fetch(`${BASE_URL}/api/user/auth`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(checkResponse)
+    .then((data) => data)
+    .catch((error) => {
+      console.error('Error during token check:', error);
+      throw error;
+    });
+};

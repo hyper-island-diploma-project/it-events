@@ -5,7 +5,6 @@ import * as userApi from '../../api/userApi';
 import RegisterModel from '../../models/RegisterModel';
 import LoginModel from '../../models/LoginModel';
 import UserModel from '../../models/UserModel';
-import EditProfileModel from '../../models/EditProfileModel';
 
 const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [isLoggedIn, setisLoggedIn] = useState<boolean>(false);
@@ -13,9 +12,25 @@ const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const registration = ({ name, lastName, email, password }: RegisterModel) => {
+  const registration = ({
+    first_name,
+    last_name,
+    email,
+    password,
+    job_title,
+    workplace,
+    experience,
+  }: RegisterModel) => {
     userApi
-      .register(name, lastName, email, password)
+      .register(
+        first_name,
+        last_name,
+        email,
+        password,
+        job_title,
+        workplace,
+        experience,
+      )
       .then((data) => {
         console.log(data);
         navigate('/login');
@@ -34,11 +49,16 @@ const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
         }
         setisLoggedIn(true);
         setCurrentUser({
-          name: res.user.first_name,
+          first_name: res.user.first_name,
+          last_name: res.user.last_name,
           email: res.user.email,
+          job_title: res.user.job_title,
+          workplace: res.user.workplace,
+          experience: res.user.experience,
           id: res.user.id,
         });
-        navigate('/dashboard');
+
+        // navigate('/dashboard');
       })
       .catch((err) => {
         console.log(err);
@@ -53,8 +73,12 @@ const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
         .then((res) => {
           setisLoggedIn(true);
           setCurrentUser({
-            name: res.user.first_name,
+            first_name: res.user.first_name,
+            last_name: res.user.last_name,
             email: res.user.email,
+            job_title: res.user.job_title,
+            workplace: res.user.workplace,
+            experience: res.user.experience,
             id: res.user.id,
           });
         })
@@ -69,38 +93,11 @@ const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
     checkToken();
   }, []);
 
-
-  const editUserData = ({ name, email }: EditProfileModel) => {
-    const jwt = localStorage.getItem('token');
-    userApi
-      .editProfile(name, email, jwt)
-      .then((res) => {
-        setCurrentUser({
-          name: res.user.first_name,
-          email: res.user.email,
-          id: res.user.id,
-        });
-        navigate('/profile');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const signout = () => {
-    localStorage.clear();
-    setisLoggedIn(false);
-    setCurrentUser(null);
-    navigate('/login');
-  };
-
   const value = {
     isLoggedIn,
     currentUser,
     registration,
     login,
-    editUserData,
-    signout,
     checkToken,
   };
 

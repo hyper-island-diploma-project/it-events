@@ -7,7 +7,9 @@ const Menu = () => {
 
   return (
     <header className="grid w-full grid-cols-[120px_auto] grid-rows-1 items-center justify-between border-b-[1px] border-stone-200 py-6">
-      <img src="/logo-header.svg" alt="logo" />
+      <Link to="/">
+        <img src="/logo-header.svg" alt="logo" />
+      </Link>
       <nav>
         <ul className="grid w-full grid-cols-[auto_auto_auto_auto_auto] grid-rows-1 gap-12 text-sm text-stone-400">
           <li>

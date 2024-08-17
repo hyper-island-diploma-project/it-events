@@ -9,6 +9,6 @@ router.get("/", userController.getAll);
 router.get("/:id", authMiddleware, userController.getOne);
 router.patch("/:id", authMiddleware, userController.editProfile);
 router.delete("/:id", authMiddleware, userController.delete);
-router.get("/auth", userController.check);
+router.post("/auth", userController.check);
 
 module.exports = router;
