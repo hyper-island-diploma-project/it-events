@@ -1,3 +1,4 @@
+
 const Footer = () => {
   return (
     <footer className="grid grid-cols-[500px_auto] grid-rows-1">
@@ -22,7 +23,7 @@ const Footer = () => {
           </button>
         </form>
       </section>
-      <section className="rounded-3xl bg-lightGray py-12 pl-8 pr-4 text-stone-500 flex flex-col justify-between">
+      <section className="flex flex-col justify-between rounded-3xl bg-lightGray py-12 pl-8 pr-4 text-stone-500">
         <ul className="mb-6 flex gap-12 text-[16px] font-medium">
           <li>About us</li>
           <li>Feedback</li>
