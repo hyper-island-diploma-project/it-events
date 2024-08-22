@@ -1,20 +1,20 @@
 import useEvents from '../providers/EventsProvider/EventsProvider.hook';
-import EventCard from './EventCard';
+import PastEventCard from './PastEventCard';
 
 const PastEvents = () => {
   const { pastEvents } = useEvents();
 
   return (
     <>
-      <section className=' mb-24'>
-        <h2>Completed</h2>
+      <section>
+        <h2>Past events</h2>
         <ul className="grid grid-cols-2 gap-5">
           {pastEvents.length === 0 ? (
             <li>No events</li>
           ) : (
             pastEvents &&
             pastEvents.map((event) => (
-              <EventCard key={event.id} event={event} />
+              <PastEventCard key={event.id} event={event} />
             ))
           )}
         </ul>

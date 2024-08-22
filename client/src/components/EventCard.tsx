@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../utils/utils';
 
 import EventModel from '../models/EventModel';
-import { CiHeart } from 'react-icons/ci';
 import { formatInTimeZone } from 'date-fns-tz';
 import EventFormat from './EventFormat';
+import EventRegisterButton from './EventRegisterButton';
 
 const BASE_URL = API_URL;
 
@@ -17,24 +17,47 @@ const EventCard: FC<EventProps> = ({ event }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/event/${event.id}`);
+    navigate(`/event/${event.id}?isSaved=${event.isSaved}`);
   };
 
   const eventDate = new Date(event.date);
 
   const formattedDate = formatInTimeZone(eventDate, 'UTC', 'dd-MM-yyyy');
 
+  const isEventPage = false;
+
+  const cardBackground = () => {
+    if (event.format_online && event.format_onsite) {
+      return '#1D6BF3';
+    } else if (!event.format_online && event.format_onsite) {
+      return '#1A1B22';
+    } else if (event.format_online && !event.format_onsite) {
+      return '#FFFFFF';
+    }
+    return null;
+  };
+  
+  const cardTextColor = () => {
+    if (event.format_online && event.format_onsite) {
+      return '#FFFFFF';
+    } else if (!event.format_online && event.format_onsite) {
+      return '#FFFFFF';
+    } else if (event.format_online && !event.format_onsite) {
+      return '#000000';
+    }
+    return null;
+  };
+
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <li
-      onClick={handleClick}
       style={{
-        background: `${event.bg_color}`,
-        color: `${event.text_color}`,
+        background: cardBackground(),
+        color: cardTextColor(),
       }}
       className="relative flex h-[267px] cursor-pointer flex-col justify-between rounded-[20px] border-[0.5px] border-stone-300 p-3"
     >
-      <div className="flex flex-col">
+      <div onClick={handleClick} className="flex flex-col">
         <div className="mb-3 flex w-full items-center text-sm">
           <EventFormat event={event} />
         </div>
@@ -45,23 +68,13 @@ const EventCard: FC<EventProps> = ({ event }) => {
           Expert <span>Anton Ivanov</span>
         </p>
         <p className="mb-3 text-[12px]">Lead frontend dev</p>
-        <p className="mb-3 text-[16px]">
-          {formattedDate}
-        </p>
+        <p className="mb-3 text-[16px]">{formattedDate}</p>
         <div className="item-center z-10 flex">
-          <button
-            style={{
-              borderColor: `${event.text_color}`,
-            }}
-            className="mr-2 w-[130px] rounded-full border px-2 py-1"
-          >
-            REGISTER
-          </button>
-          <CiHeart
-            style={{
-              borderColor: `${event.text_color}`,
-            }}
-            className="rounded-full border border-white p-[2px] text-4xl"
+          <EventRegisterButton
+            isSaved={event.isSaved}
+            event={event}
+            isEventPage={isEventPage}
+            cardTextColor={cardTextColor}
           />
         </div>
       </div>

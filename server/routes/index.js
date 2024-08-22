@@ -8,6 +8,6 @@ const userSubscriptionRouter = require("./userSubscriptionRouter");
 router.use("/user", userRouter);
 router.use("/event", eventRouter);
 router.use("/host", hostRouter);
-router.use("/subscription", userSubscriptionRouter);
+router.use("/event-registration", userSubscriptionRouter);
 
 module.exports = router;

@@ -86,16 +86,24 @@ class eventController {
       events = await Event.findAll();
     }
     if (format_online && !format_onsite && !topic && !city) {
-      events = await Event.findAll({ where: { format_online } });
+      events = await Event.findAll({
+        where: { format_online },
+      });
     }
     if (!format_online && format_onsite && !topic && !city) {
-      events = await Event.findAll({ where: { format_onsite } });
+      events = await Event.findAll({
+        where: { format_onsite },
+      });
     }
     if (!format_online && !format_onsite && topic && !city) {
-      events = await Event.findAll({ where: { topic } });
+      events = await Event.findAll({
+        where: { topic },
+      });
     }
     if (!format_online && !format_onsite && !topic && city) {
-      events = await Event.findAll({ where: { city } });
+      events = await Event.findAll({
+        where: { city },
+      });
     }
     if (format_online && format_onsite && topic && city) {
       events = await Event.findAll({

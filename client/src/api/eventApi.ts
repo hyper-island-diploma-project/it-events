@@ -1,6 +1,5 @@
 import { API_URL } from '../utils/utils';
 import checkResponse from './checkResponse';
-// import EventModel from '../models/EventModel';
 
 const BASE_URL = API_URL;
 

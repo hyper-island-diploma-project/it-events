@@ -1,11 +1,11 @@
 
 const Footer = () => {
   return (
-    <footer className="grid grid-cols-[500px_auto] grid-rows-1">
+    <footer className="grid grid-cols-[500px_auto] grid-rows-1 mt-24">
       <section className="rounded-3xl bg-lightGray py-12 pl-4 pr-8">
         <div className="mb-4 flex flex-col">
           <p>
-            It Events<span className="font-medium"> Newsletter:</span>{' '}
+            IT Events<span className="font-medium"> Newsletter:</span>{' '}
           </p>
 
           <p>
