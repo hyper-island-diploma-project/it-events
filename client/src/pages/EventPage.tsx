@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import EventModel from '../models/EventModel';
 import useEvents from '../providers/EventsProvider/EventsProvider.hook';
 import HeroEvent from '../components/HeroEvent';
@@ -7,11 +7,14 @@ import EventDetails from '../components/EventDetails';
 import EventHosts from '../components/EventHosts';
 import EventProgram from '../components/EventProgram';
 import EventLocation from '../components/EventLocation';
-import EventRegistrationButton from '../components/EventRegistrationButton';
-// import RegistrationForm from '../components/RegistrationForm';
+import EventRegisterButton from '../components/EventRegisterButton';
 
 function EventPage() {
   const { id } = useParams<{ id: string }>();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const isSaved = queryParams.get('isSaved') === 'true';
+  const isEventPage = true;
 
   const [event, setEvent] = useState<EventModel | undefined>(undefined);
   const { getOneEvent } = useEvents();
@@ -36,8 +39,7 @@ function EventPage() {
           <EventHosts event={event} />
           <EventProgram event={event} />
           <EventLocation event={event} />
-          <EventRegistrationButton />
-          {/* <RegistrationForm /> */}
+          <EventRegisterButton event={event} isSaved={isSaved} isEventPage={isEventPage} />
         </>
       ) : (
         <p>Event not found</p>

@@ -2,13 +2,16 @@ import { useState, FC, ReactNode, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserProviderContext from './UserProvider.context';
 import * as userApi from '../../api/userApi';
+import * as userEventApi from '../../api/userEventsApi';
 import RegisterModel from '../../models/RegisterModel';
 import LoginModel from '../../models/LoginModel';
 import UserModel from '../../models/UserModel';
+import UserEventModel from '../../models/UserEventModel';
 
 const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [isLoggedIn, setisLoggedIn] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<UserModel | null>(null);
+  const [userEventList, setUserEventList] = useState<UserEventModel[] | []>([]);
 
   const navigate = useNavigate();
 
@@ -93,12 +96,42 @@ const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
     checkToken();
   }, []);
 
+  const logOut = () => {
+    localStorage.clear();
+    setisLoggedIn(false);
+    setCurrentUser(null);
+    navigate('/');
+  };
+
+  const registerEvent = ({userId, eventId}: UserEventModel) => {
+    const tokenFromLocalStorage = localStorage.getItem('token');
+    // if (tokenFromLocalStorage) {
+      userEventApi
+        .registerEvent({userId, eventId}, tokenFromLocalStorage)
+        .then((res) => {
+          const newUserEvent: UserEventModel = {
+            id: res.id,
+            userId: res.userId,
+            eventId: res.eventId,
+            isSaved: true,
+          };
+          const updUserEventList = [...userEventList, newUserEvent];
+          setUserEventList(updUserEventList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    // }
+  };
+
   const value = {
     isLoggedIn,
     currentUser,
     registration,
     login,
     checkToken,
+    logOut,
+    registerEvent,
   };
 
   return (

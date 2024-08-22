@@ -7,7 +7,7 @@ import MainPage from './pages/MainPage';
 import EventPage from './pages/EventPage';
 import RandomCoffePage from './pages/RandomCoffePage';
 import Favorites from './pages/Favorites';
-import Profile from './pages/Profile';
+import ProfilePage from './pages/ProfilePage.tsx';
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
                 />
                 <Route
                   path="/profile"
-                  element={<ProtectedRoute element={<Profile />} />}
+                  element={<ProtectedRoute element={<ProfilePage />} />}
                 />
               </Route>
             </Routes>

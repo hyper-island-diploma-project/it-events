@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import EventModel from '../models/EventModel';
-import { CiHeart } from 'react-icons/ci';
+// import { CiHeart } from 'react-icons/ci';
 import { formatInTimeZone } from 'date-fns-tz';
 import { API_URL } from '../utils/utils';
 import EventFormat from './EventFormat';
@@ -34,18 +34,18 @@ const HeroEvent: FC<EventProps> = ({ event }) => {
           <p className="mb-3 text-2xl">Lead frontend dev</p>
         </div>
 
-        <div className="item-center z-10 flex text-[16px]">
-          <p className="mr-2 rounded-full border px-4 py-1">{formattedDate}</p>
-          <button className="mr-2 rounded-full border px-8 py-1">
+        <div className="item-center z-10 flex text-[20px]">
+          <p className="mr-2 rounded-full border px-6 py-1">{formattedDate}</p>
+          {/* <button className="mr-2 rounded-full border px-8 py-1">
             REGISTER
           </button>
-          <CiHeart className="rounded-full border border-white p-[2px] text-4xl" />
+          <CiHeart className="rounded-full border border-white p-[2px] text-4xl" /> */}
         </div>
 
         <img
           src={`${BASE_URL}/${event.image}`}
           alt="event icon"
-          className="absolute bottom-0 right-0"
+          className="absolute bottom-0 right-0 w-[200px]"
         />
       </div>
       <p className="flex w-full items-center text-balance rounded-[60px] bg-lightGray px-8 text-2xl font-light leading-relaxed">

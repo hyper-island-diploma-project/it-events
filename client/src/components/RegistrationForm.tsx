@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import useUser from '../providers/UserProvider/UserProvider.hook';
 import RegisterModel from '../models/RegisterModel';
 import { FC } from 'react';
@@ -35,7 +36,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ toggleForm }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex h-full w-full items-center justify-center bg-neutral-950 bg-opacity-90">
+    <div className="z-20 fixed inset-0 flex h-full w-full items-center justify-center bg-neutral-950 bg-opacity-90">
       <div className="relative flex flex-col items-center rounded-[12px] bg-white px-12 py-6">
         <div className="absolute -top-20 flex flex-col items-center justify-center gap-1 text-xl text-white">
           <img
@@ -45,8 +46,10 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ toggleForm }) => {
           />
           <p>Unified profile for all events</p>
         </div>
-        <div className="grid grid-cols-[10px_auto] text-xl items-center mb-6 w-full">
-          <GoChevronLeft />
+        <div className="grid grid-cols-[30px_auto] text-xl items-center mb-6 w-full">
+          <Link to="/" className=" w-full">
+            <GoChevronLeft className=" text-2xl hover:scale-125 transform transition-transform duration-300"/>
+          </Link>
           <h4 className=" text-center">Registration</h4>
         </div>
 
@@ -271,7 +274,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ toggleForm }) => {
 
           <button
             disabled={!isValid}
-            className="button_auth_form"
+            className="button_auth_form hover:bg-opacity-90"
             aria-label="Send result"
           >
             Register
@@ -282,7 +285,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ toggleForm }) => {
           <p className="mr-3 text-stone-600">Already registered?</p>
           <button
             onClick={toggleForm}
-            className="cursor-pointer text-blueAccent"
+            className="cursor-pointer text-blueAccent hover:scale-125 transform transition-transform duration-300"
           >
             Login
           </button>

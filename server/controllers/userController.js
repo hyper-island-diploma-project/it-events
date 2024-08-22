@@ -163,17 +163,24 @@ class userController {
     }
   }
 
-  async getOne(req, res) {
-    const { id } = req.params;
-    try {
-      const user = await User.findOne({
-        where: { id },
-      });
-      return res.json(user);
-    } catch (error) {
-      console.error(error);
-      return next(ApiError.internal("Something went wrong"));
-    }
+  // async getOne(req, res) {
+  //   const { id } = req.params;
+  //   try {
+  //     const user = await User.findOne({
+  //       where: { id },
+  //     });
+  //     return res.json(user);
+  //   } catch (error) {
+  //     console.error(error);
+  //     return next(ApiError.internal("Something went wrong"));
+  //   }
+  // }
+
+  async getOne(id) {
+    const user = await User.findOne({
+      where: { id },
+    });
+    return user;
   }
 
   async delete(req, res, next) {
@@ -200,14 +207,34 @@ class userController {
 
       const decoded = jwt.verify(token, process.env.SECRET_KEY);
       req.user = decoded;
-      return res.json( { message: "Token is valid", user: req.user });
+
+      const user = await User.findOne({
+        where: { id:req.user.id },
+      });
+
+      if (!user) {
+        return next(ApiError.unauthorized("User not found"));
+      }
+
+      return res.json({
+        message: "Token is valid",
+        user: {
+          id: user.id,
+          email: user.email,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          job_title: user.job_title,
+          workplace: user.workplace,
+          experience: user.experience,
+        },
+      });
+
+      // return res.json( { message: "Token is valid", user: req.user });
     } catch (error) {
       console.error(error);
       return next(ApiError.unauthorized("Token is invalid or expired"));
     }
   }
-
-
 }
 
 module.exports = new userController();
