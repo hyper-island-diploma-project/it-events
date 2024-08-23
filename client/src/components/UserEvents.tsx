@@ -1,4 +1,5 @@
 import EventCard from './EventCard';
+import PastEventCard from './PastEventCard';
 import EventModel from '../models/EventModel';
 import { FC, useState } from 'react';
 
@@ -57,7 +58,7 @@ const UserEvents: FC<UserEventsProps> = ({ upcomingEvents, pastEvents }) => {
             ) : (
               upcomingEvents &&
               upcomingEvents.map((event) => (
-                <EventCard event={event.event} key={event.event.id} />
+                <EventCard event={event} key={event.id} />
               ))
             )}
           </ul>
@@ -71,7 +72,7 @@ const UserEvents: FC<UserEventsProps> = ({ upcomingEvents, pastEvents }) => {
             ) : (
               pastEvents &&
               pastEvents.map((event) => (
-                <EventCard event={event.event} key={event.event.id} />
+                <PastEventCard event={event} key={event.id} eventId={event.eventId} />
               ))
             )}
           </ul>
@@ -81,4 +82,4 @@ const UserEvents: FC<UserEventsProps> = ({ upcomingEvents, pastEvents }) => {
   );
 };
 
-export default UserEvents;
+export default UserEvents; 

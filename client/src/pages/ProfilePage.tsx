@@ -26,23 +26,23 @@ function ProfilePage() {
 
     const futureEvents = registeredEvents
       ?.filter((event) => {
-        const eventDate = new Date(event.event.date);
+        const eventDate = new Date(event.date);
         if (isNaN(eventDate.getTime())) {
-          console.warn('Invalid date format:', event.event.date);
+          console.warn('Invalid date format:', event.date);
           return false;
         }
         return eventDate.getTime() >= now.getTime();
       })
       .sort(
         (a, b) =>
-          new Date(a.event.date).getTime() - new Date(b.event.date).getTime(),
+          new Date(a.date).getTime() - new Date(b.date).getTime(),
       );
 
     const completedEvents = registeredEvents
-      ?.filter((event) => new Date(event.event.date).getTime() < now.getTime())
+      ?.filter((event) => new Date(event.date).getTime() < now.getTime())
       .sort(
         (a, b) =>
-          new Date(a.event.date).getTime() - new Date(b.event.date).getTime(),
+          new Date(a.date).getTime() - new Date(b.date).getTime(),
       );
 
     setUpcomingEvents(futureEvents ?? []);

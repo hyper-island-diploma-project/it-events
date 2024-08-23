@@ -35,7 +35,6 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
     console.log(allEvents);
   }, [registeredEvents, allSourceEvents]);
 
-
   useEffect(() => {
     const now = new Date();
 
@@ -54,8 +53,8 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
       ?.filter((event) => new Date(event.date).getTime() < now.getTime())
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-    setUpcomingEvents(futureEvents??[]);
-    setPastEvents(pastEvents??[]);
+    setUpcomingEvents(futureEvents ?? []);
+    setPastEvents(pastEvents ?? []);
   }, [allEvents]);
 
   const getOneEvent = async (id: number) => {
@@ -67,13 +66,39 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
       return null;
     }
   };
+
   const getRegisteredEvents = (userId: number) => {
     const tokenFromLocalStorage = localStorage.getItem('token');
     if (tokenFromLocalStorage) {
       userEventApi
         .fetchAllUserEvent(userId, tokenFromLocalStorage)
         .then((res) => {
-          setRegisteredEvents(res);
+          const updatedEventList = res.map((item: EventModel) => ({
+            // ...event,
+            // isSaved: true,
+            ...item.event, // Разворачиваем данные события на верхнем уровне
+            eventId: item.eventId, // Сохраняем идентификатор события
+            id: item.id, // Сохраняем оригинальный идентификатор записи
+            userId: item.userId, // Сохраняем идентификатор пользователя
+            isSaved: true,
+          }));
+          setRegisteredEvents(updatedEventList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const unregisterEvent = (id: number) => {
+    const tokenFromLocalStorage = localStorage.getItem('token');
+    if (tokenFromLocalStorage) {
+      userEventApi
+        .unregisterEvent(id, tokenFromLocalStorage)
+        .then(() => {
+          setRegisteredEvents((prevEvents) => {
+            prevEvents.filter((event) => event.id !== id);
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -89,7 +114,7 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
     getOneEvent,
     getRegisteredEvents,
     registeredEvents,
-    // currentEvent,
+    unregisterEvent,
   };
 
   return (
