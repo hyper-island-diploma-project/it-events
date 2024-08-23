@@ -15,11 +15,12 @@ class eventController {
         date,
         topic,
         available_seats,
-        bg_color,
-        text_color,
+        // bg_color,
+        // text_color,
         hostIds,
         info,
         agenda,
+        keywords,
       } = req.body;
 
       const { image } = req.files;
@@ -34,8 +35,9 @@ class eventController {
         date,
         topic,
         available_seats,
-        bg_color,
-        text_color,
+        // bg_color,
+        // text_color,
+        keywords: JSON.parse(keywords || "[]"),
         image: fileName,
       });
 

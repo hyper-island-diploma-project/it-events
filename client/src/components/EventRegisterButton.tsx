@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import EventModel from '../models/EventModel';
 import useUser from '../providers/UserProvider/UserProvider.hook';
+import useEvents from '../providers/EventsProvider/EventsProvider.hook';
 import InfoPopup from './InfoPopup';
 
 interface EventProps {
@@ -16,9 +17,15 @@ const EventRegisterButton: FC<EventProps> = ({
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
 
   const { isLoggedIn, registerEvent, currentUser } = useUser();
-  const saveEvent = (): void => {
+  const { unregisterEvent } = useEvents();
+
+  const handleButtonClick = (): void => {
     if (isLoggedIn && currentUser && event) {
-      registerEvent({ userId: currentUser.id, eventId: event.id });
+      if (event.isSaved===true) {
+        unregisterEvent(event.id);
+      } else {
+        registerEvent({ userId: currentUser.id, eventId: event.id });
+      }
     } else {
       setIsInfoPopupOpen(true);
     }
@@ -50,11 +57,11 @@ const EventRegisterButton: FC<EventProps> = ({
         <>
           {' '}
           <button
-            onClick={saveEvent}
+            onClick={handleButtonClick}
             style={{
               borderColor: cardTextColor()
             }}
-            className="mr-2 w-auto rounded-full border px-4 py-1"
+            className="mr-2 w-auto rounded-full border px-[10px] py-1"
           >
             {isSaved ? 'UNREGISTERED' : 'REGISTER'}
           </button>

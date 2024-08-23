@@ -30,7 +30,7 @@ const EventHosts: FC<EventHostsProps> = ({ event }) => {
             <img
               src={`${BASE_URL}/${hostImgOne}`}
               alt="Host"
-              className="h-[159px] w-full object-cover"
+              className="h-[159px] w-full object-cover object-top"
             />
             <div className="absolute bottom-0 h-2/3 w-12 bg-white"></div>
             <div className="absolute right-0 h-1/2 w-8 bg-white"></div>
@@ -65,7 +65,7 @@ const EventHosts: FC<EventHostsProps> = ({ event }) => {
             <img
               src={`${BASE_URL}/${hostImgTwo}`}
               alt="Host"
-              className="h-[159px] w-full object-cover"
+              className="h-[159px] w-full object-cover object-top"
             />
             <div className="absolute h-2/3 w-12 bg-white"></div>
             <div className="absolute bottom-0 right-0 h-1/2 w-8 bg-white"></div>
@@ -104,7 +104,7 @@ const EventHosts: FC<EventHostsProps> = ({ event }) => {
             <img
               src={`${BASE_URL}/${hostImgThree}`}
               alt="Host"
-              className="h-[159px] w-full object-cover"
+              className="h-[159px] w-full object-cover object-top"
             />
             <div className="absolute h-1/2 w-12 bg-white"></div>
             <div className="absolute bottom-0 right-0 h-2/3 w-8 bg-white"></div>
@@ -132,7 +132,7 @@ const EventHosts: FC<EventHostsProps> = ({ event }) => {
             <p className="text-[14px] text-stone-400">
               {' '}
               {hosts && hosts.length > 0
-                ? hosts[1].about
+                ? hosts[2].about
                 : 'Host about not found'}
             </p>
           </div>

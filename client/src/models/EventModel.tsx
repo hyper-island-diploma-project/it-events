@@ -39,14 +39,13 @@ type EventModel = {
   date: string;
   topic: string;
   available_seats?: number;
-  bg_color: '#1D6BF3' | '#000000' | '#FFFFFF';
-  text_color?: '#000000' | '#FFFFFF';
   image: string;
   createdAt?: string;
   updatedAt?: string;
   info?: InfoItem[];
   hosts?: Hosts[];
   agenda?: Agenda[];
+  keywords: [];
 };
 
 export default EventModel;

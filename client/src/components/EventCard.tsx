@@ -26,6 +26,8 @@ const EventCard: FC<EventProps> = ({ event }) => {
 
   const isEventPage = false;
 
+  const keyWordList = event.keywords;
+
   const cardBackground = () => {
     if (event.format_online && event.format_onsite) {
       return '#1D6BF3';
@@ -36,7 +38,7 @@ const EventCard: FC<EventProps> = ({ event }) => {
     }
     return null;
   };
-  
+
   const cardTextColor = () => {
     if (event.format_online && event.format_onsite) {
       return '#FFFFFF';
@@ -61,14 +63,22 @@ const EventCard: FC<EventProps> = ({ event }) => {
         <div className="mb-3 flex w-full items-center text-sm">
           <EventFormat event={event} />
         </div>
-        <h5 className="text-xl">{event.title}</h5>
+        <h5 className="text-2xl">{event.title}</h5>
       </div>
-      <div className="flex flex-col">
-        <p className="mb-1 text-[12px]">
-          Expert <span>Anton Ivanov</span>
-        </p>
-        <p className="mb-3 text-[12px]">Lead frontend dev</p>
-        <p className="mb-3 text-[16px]">{formattedDate}</p>
+      <div className="flex flex-col gap-3">
+        <div className=' mb-2'>
+        {keyWordList.length === 0 ? (
+          <p>No keywords</p>
+        ) : (
+          <ul className=' flex flex-col'>
+            {keyWordList &&
+              keyWordList.map((item, index) => {
+                return <li className=' text-sm' key={index}>{item}</li>;
+              })}
+          </ul>
+        )}
+        </div>
+        <p className="text-[16px]">{formattedDate}</p>
         <div className="item-center z-10 flex">
           <EventRegisterButton
             isSaved={event.isSaved}

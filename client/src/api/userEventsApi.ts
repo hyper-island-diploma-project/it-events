@@ -25,3 +25,14 @@ export const registerEvent = (data: UserEventModel, token: string) => {
     body: JSON.stringify(data),
   }).then(checkResponse);
 };
+
+export const unregisterEvent = (id:number, token: string) => {
+  return fetch(`${BASE_URL}/api/event-registration/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    // body: JSON.stringify(data),
+  }).then(checkResponse);
+};

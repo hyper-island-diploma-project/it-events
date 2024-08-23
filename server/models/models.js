@@ -32,11 +32,13 @@ const Event = sequelize.define("event", {
   topic: { type: DataTypes.STRING, allowNull: false },
   available_seats: { type: DataTypes.INTEGER},
   image: { type: DataTypes.STRING, allowNull: false },
-  bg_color: {
-    type: DataTypes.ENUM("#1D6BF3", "#000000", "#FFFFFF"),
-    allowNull: false,
-  },
-  text_color: { type: DataTypes.ENUM("#000000", "#FFFFFF"), allowNull: false },
+  keywords: { type: DataTypes.ARRAY(DataTypes.STRING), allowNull: false },
+
+  // bg_color: {
+  //   type: DataTypes.ENUM("#1D6BF3", "#000000", "#FFFFFF"),
+  //   allowNull: false,
+  // },
+  // text_color: { type: DataTypes.ENUM("#000000", "#FFFFFF"), allowNull: false },
 });
 
 const Host = sequelize.define("host", {
@@ -57,7 +59,6 @@ const EventInfo = sequelize.define("event_info", {
 
 const Agenda = sequelize.define("agenda", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  // как время учитывать для разных регионов?
   time: { type: DataTypes.STRING, allowNull: false },
   title: { type: DataTypes.STRING, allowNull: false },
   subtitle: { type: DataTypes.STRING, allowNull: true },

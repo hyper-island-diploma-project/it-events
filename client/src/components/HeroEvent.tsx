@@ -20,6 +20,8 @@ const HeroEvent: FC<EventProps> = ({ event }) => {
   const description =
     info && info.length > 0 ? info[0].description : 'No description available';
 
+  const keyWordList = event.keywords;
+
   return (
     <div className="grid grid-cols-[522px_auto] grid-rows-1">
       <div className="relative flex h-[429px] flex-col justify-between overflow-hidden rounded-[60px] bg-black p-8 text-white">
@@ -28,18 +30,26 @@ const HeroEvent: FC<EventProps> = ({ event }) => {
             <EventFormat event={event} />
           </div>
           <h5 className="text-3xl">{event.title}</h5>
-          <p className="mt-8 text-2xl">
-            Expert <span>Anton Ivanov</span>
-          </p>
-          <p className="mb-3 text-2xl">Lead frontend dev</p>
+          <div className="mt-10">
+            {keyWordList.length === 0 ? (
+              <p>No keywords</p>
+            ) : (
+              <ul className="flex flex-col">
+                {keyWordList &&
+                  keyWordList.map((item, index) => {
+                    return (
+                      <li className="text-lg" key={index}>
+                        {item}
+                      </li>
+                    );
+                  })}
+              </ul>
+            )}
+          </div>
         </div>
 
         <div className="item-center z-10 flex text-[20px]">
           <p className="mr-2 rounded-full border px-6 py-1">{formattedDate}</p>
-          {/* <button className="mr-2 rounded-full border px-8 py-1">
-            REGISTER
-          </button>
-          <CiHeart className="rounded-full border border-white p-[2px] text-4xl" /> */}
         </div>
 
         <img
