@@ -7,6 +7,7 @@ type UserModel = {
   job_title: string;
   workplace: string;
   experience: string;
+  image: string;
 };
 
 export default UserModel;

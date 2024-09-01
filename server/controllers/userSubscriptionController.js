@@ -17,6 +17,16 @@ class UserSubscriptionController {
     }
   }
 
+  async getAll(req, res, next) {
+    try {
+      const userSubscriptions = await UserSubscription.findAll();
+      return res.json(userSubscriptions);
+    } catch (error) {
+      console.error(error);
+      return next(ApiError.internal("Something went wrong"));
+    }
+  }
+
   async getAllByUserId(req, res) {
     const { id } = req.params;
 
@@ -50,6 +60,7 @@ class UserSubscriptionController {
       return next(ApiError.internal("Something went wrong"));
     }
   }
+
 }
 
 module.exports = new UserSubscriptionController();

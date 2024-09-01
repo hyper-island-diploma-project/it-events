@@ -1,6 +1,6 @@
 const HeroMain = () => {
   return (
-    <section className="relative w-full rounded-[20px] bg-black p-8 overflow-hidden my-6">
+    <section className="relative w-full rounded-[20px] bg-black p-8 overflow-hidden mb-6">
       <img src="/hero-img.svg" alt="" className="absolute -bottom-[50px] -right-[100px] " />
       <div className="flex gap-6 flex-col text-white max-w-[700px]">
         <h3 className=" text-xl font-medium">With IT Events you can:</h3>

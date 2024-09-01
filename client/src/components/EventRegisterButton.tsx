@@ -15,16 +15,20 @@ const EventRegisterButton: FC<EventProps> = ({
   cardTextColor,
 }) => {
   const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(isSaved);
 
-  const { isLoggedIn, registerEvent, currentUser } = useUser();
-  const { unregisterEvent } = useEvents();
+  const { isLoggedIn, currentUser } = useUser();
+  const { unregisterEvent, registerEvent } = useEvents();
 
   const handleButtonClick = (): void => {
     if (isLoggedIn && currentUser && event) {
-      if (event.isSaved===true) {
+      if (isRegistered) {
         unregisterEvent(event.id);
+        setIsRegistered(false)
       } else {
-        registerEvent({ userId: currentUser.id, eventId: event.id });
+        // registerEvent({ userId: currentUser.id, eventId: event.id });
+        registerEvent({ userId: currentUser.id, eventId: event.eventId });
+        setIsRegistered(true)
       }
     } else {
       setIsInfoPopupOpen(true);
@@ -61,9 +65,9 @@ const EventRegisterButton: FC<EventProps> = ({
             style={{
               borderColor: cardTextColor()
             }}
-            className="mr-2 w-auto rounded-full border px-[10px] py-1"
+            className="mr-2 w-auto rounded-full border px-[14px] py-1"
           >
-            {isSaved ? 'UNREGISTERED' : 'REGISTER'}
+            {isRegistered ? 'UNREGISTER' : 'REGISTER'}
           </button>
           {isInfoPopupOpen && <InfoPopup isOpen={isInfoPopupOpen} />}
         </>
@@ -74,3 +78,4 @@ const EventRegisterButton: FC<EventProps> = ({
 };
 
 export default EventRegisterButton;
+

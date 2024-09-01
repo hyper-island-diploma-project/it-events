@@ -50,7 +50,7 @@ function ProfilePage() {
   }, [registeredEvents]);
 
   return (
-    <>
+    <div className="py-6">
       <p className="pageName">Profile</p>
       {currentUser ? (
         <>
@@ -60,7 +60,7 @@ function ProfilePage() {
       ) : (
         <p>User not found</p>
       )}
-    </>
+    </div>
   );
 }
 

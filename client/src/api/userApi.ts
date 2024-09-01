@@ -3,31 +3,41 @@ import checkResponse from './checkResponse';
 
 export const BASE_URL = API_URL;
 
-export const register = (
-  first_name: string,
-  last_name: string,
-  email: string,
-  password: string,
-  job_title: string,
-  workplace: string,
-  experience: string,
-) => {
+// export const register = (
+//   first_name: string,
+//   last_name: string,
+//   email: string,
+//   password: string,
+//   job_title: string,
+//   workplace: string,
+//   experience: string,
+//   image: string,
+// ) => {
+//   return fetch(`${BASE_URL}/api/user/registration`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//       first_name,
+//       last_name,
+//       email,
+//       password,
+//       job_title,
+//       workplace,
+//       experience,
+//       image,
+//     }),
+//   }).then(checkResponse);
+// };
+
+export const register = (formData: FormData) => {
   return fetch(`${BASE_URL}/api/user/registration`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      first_name,
-      last_name,
-      email,
-      password,
-      job_title,
-      workplace,
-      experience,
-    }),
+    body: formData, // Передаем FormData
   }).then(checkResponse);
 };
+
 
 export const login = (email: string, password: string) => {
   return fetch(`${BASE_URL}/api/user/login`, {
