@@ -7,7 +7,7 @@ import useUser from '../providers/UserProvider/UserProvider.hook';
 import { useEffect } from 'react';
 
 function MainPage() {
-  const { registeredEvents, getRegisteredEvents, getAllEvents, allEvents } =
+  const { registeredEvents, getRegisteredEvents, getAllEvents, allEvents, getUsersSubscriptions } =
     useEvents();
   const { currentUser } = useUser();
 
@@ -19,16 +19,17 @@ function MainPage() {
   useEffect(() => {
     if (allEvents) return;
     getAllEvents();
+    getUsersSubscriptions();
   }, []);
   
   return (
-    <>
+    <div className="py-6">
       <p className="pageName">Events</p>
       <HeroMain />
       <UpcomingEvents />
       <PastEvents />
       <InfoPopup isOpen={false} />
-    </>
+    </div>
   );
 }
 

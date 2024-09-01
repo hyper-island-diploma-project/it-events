@@ -13,6 +13,7 @@ type FormData = {
   job_title: string;
   workplace: string;
   experience: string;
+  image: File;
 };
 
 interface RegistrationFormProps {
@@ -31,12 +32,32 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ toggleForm }) => {
   });
 
   const onSubmit = (data: RegisterModel) => {
-    console.log(data);
-    registration(data);
+    const formData = new FormData();
+  
+    formData.append('first_name', data.first_name);
+    formData.append('last_name', data.last_name);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    formData.append('job_title', data.job_title);
+    formData.append('workplace', data.workplace);
+    formData.append('experience', data.experience);
+  
+    if (data.image && data.image[0]) {
+    // if (data.image ) {
+       formData.append('image', data.image[0], "photo.jpg");
+    }
+  
+    // Логирование содержимого FormData
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+  
+    registration(formData); // Передаем FormData вместо обычного объекта
   };
+  
 
   return (
-    <div className="z-20 fixed inset-0 flex h-full w-full items-center justify-center bg-neutral-950 bg-opacity-90">
+    <div className="fixed inset-0 z-20 flex h-full w-full items-center justify-center bg-neutral-950 bg-opacity-90">
       <div className="relative flex flex-col items-center rounded-[12px] bg-white px-12 py-6">
         <div className="absolute -top-20 flex flex-col items-center justify-center gap-1 text-xl text-white">
           <img
@@ -46,11 +67,11 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ toggleForm }) => {
           />
           <p>Unified profile for all events</p>
         </div>
-        <div className="grid grid-cols-[30px_auto] text-xl items-center mb-6 w-full">
-          <Link to="/" className=" w-full">
-            <GoChevronLeft className=" text-2xl hover:scale-125 transform transition-transform duration-300"/>
+        <div className="mb-6 grid w-full grid-cols-[30px_auto] items-center text-xl">
+          <Link to="/" className="w-full">
+            <GoChevronLeft className="transform text-2xl transition-transform duration-300 hover:scale-125" />
           </Link>
-          <h4 className=" text-center">Registration</h4>
+          <h4 className="text-center">Registration</h4>
         </div>
 
         <form
@@ -107,7 +128,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ toggleForm }) => {
                   message: 'Maximum length is 40',
                 },
                 pattern: {
-                  value:  /^[a-zA-Z\s'-]+$/,
+                  value: /^[a-zA-Z\s'-]+$/,
                   message: 'Please enter a valid last name',
                 },
               })}
@@ -196,7 +217,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ toggleForm }) => {
                   message: 'Maximum length is 40',
                 },
                 pattern: {
-                  value:  /^[a-zA-Z0-9._\s-]+$/,
+                  value: /^[a-zA-Z0-9._\s-]+$/,
                   message: 'Please enter a valid job title',
                 },
               })}
@@ -227,7 +248,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ toggleForm }) => {
                   message: 'Maximum length is 40',
                 },
                 pattern: {
-                  value:  /^[a-zA-Z0-9._\s-]+$/,
+                  value: /^[a-zA-Z0-9._\s-]+$/,
                   message: 'Please enter a valid workplace',
                 },
               })}
@@ -272,6 +293,17 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ toggleForm }) => {
             )}
           </div>
 
+          <input
+            type="file"
+            {...register('image', {
+              required: {
+                value: true,
+                message: 'Image is required!',
+              },
+            })}
+            accept="image/jpg, image/jpeg, image/png"
+          />
+
           <button
             disabled={!isValid}
             className="button_auth_form hover:bg-opacity-90"
@@ -285,7 +317,7 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ toggleForm }) => {
           <p className="mr-3 text-stone-600">Already registered?</p>
           <button
             onClick={toggleForm}
-            className="cursor-pointer text-blueAccent hover:scale-125 transform transition-transform duration-300"
+            className="transform cursor-pointer text-blueAccent transition-transform duration-300 hover:scale-125"
           >
             Login
           </button>

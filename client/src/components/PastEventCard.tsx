@@ -12,7 +12,9 @@ interface EventProps {
 }
 
 const PastEventCard: FC<EventProps> = ({ event, eventId }) => {
-  const [currentEvent, setCurrentEvent] = useState<EventModel | undefined>(undefined);
+  const [currentEvent, setCurrentEvent] = useState<EventModel | undefined>(
+    undefined,
+  );
   const { getOneEvent } = useEvents();
 
   const id = eventId;
@@ -34,19 +36,29 @@ const PastEventCard: FC<EventProps> = ({ event, eventId }) => {
   const info = currentEvent?.info;
   const description =
     info && info.length > 0 ? info[0].description : 'No description available';
+
+  const keyWordList = event.keywords;
+
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-    <li className="relative flex h-[267px] bg-black text-white  flex-col justify-between rounded-[20px] border-[0.5px] border-stone-300 p-5">
+    <li className="relative flex h-[267px] flex-col justify-between rounded-[20px] border-[0.5px] border-stone-300 bg-black p-5 text-white">
       <div className="flex flex-col">
-        <h5 className="text-xl mb-5">{event.title}</h5>
-        <p className=' text-sm'>{description}</p>
+        <h5 className="mb-5 text-xl">{event.title}</h5>
+        {/* <p className="text-sm">{description}</p> */}
+        <div className=' mb-2'>
+        {keyWordList.length === 0 ? (
+          <p>No keywords</p>
+        ) : (
+          <ul className=' flex flex-col'>
+            {keyWordList &&
+              keyWordList.map((item, index) => {
+                return <li className=' text-sm' key={index}>{item}</li>;
+              })}
+          </ul>
+        )}
+        </div>
       </div>
       <div className="flex flex-col">
-        {/* <p className="mb-1 text-[12px]">
-          Expert <span>Anton Ivanov</span>
-        </p>
-        <p className="mb-3 text-[12px]">Lead frontend dev</p> */}
-        <p>topic: {event.topic}</p>
         <p className="mb-3 text-[16px] text-stone-400">{formattedDate}</p>
       </div>
       <img

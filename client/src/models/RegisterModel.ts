@@ -6,6 +6,7 @@ type RegisterModel = {
   job_title: string;
   workplace: string;
   experience: string;
+  image: FileList;
 };
 
 export default RegisterModel;

@@ -17,7 +17,7 @@ const EventCard: FC<EventProps> = ({ event }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/event/${event.id}?isSaved=${event.isSaved}`);
+    navigate(`/event/${event.eventId}?isSaved=${event.isSaved}`);
   };
 
   const eventDate = new Date(event.date);

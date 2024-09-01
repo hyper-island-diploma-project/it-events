@@ -11,7 +11,7 @@ interface IUserProvider {
   login: (data: LoginModel) => void;
   checkToken:() => void;
   logOut:() => void;
-  registerEvent: (data: UserEventModel) => void;
+  // registerEvent: (data: UserEventModel) => void;
 }
 
 const UserContext = createContext<IUserProvider>({
@@ -21,7 +21,7 @@ const UserContext = createContext<IUserProvider>({
   login: () => {},
   checkToken: () => {},
   logOut: () => {},
-  registerEvent: () => {}
+  // registerEvent: () => {}
 });
 
 export default UserContext;

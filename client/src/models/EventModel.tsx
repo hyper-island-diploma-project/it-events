@@ -31,7 +31,8 @@ type Agenda = {
 };
 
 type EventModel = {
-  id: number | null;
+  id?: number | null;
+  eventId?: number | null;
   title: string;
   city?: string;
   format_online: boolean;
@@ -46,6 +47,7 @@ type EventModel = {
   hosts?: Hosts[];
   agenda?: Agenda[];
   keywords: [];
+  isSaved?: boolean;
 };
 
 export default EventModel;

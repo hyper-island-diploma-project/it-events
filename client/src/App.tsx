@@ -5,7 +5,7 @@ import ProtectedRoute from './routeProtection/ProtectedRoute.tsx';
 import Root from './pages/Root';
 import MainPage from './pages/MainPage';
 import EventPage from './pages/EventPage';
-import RandomCoffePage from './pages/RandomCoffePage';
+import RandomCoffeePage from './pages/RandomCoffeePage.tsx';
 import Favorites from './pages/Favorites';
 import ProfilePage from './pages/ProfilePage.tsx';
 
@@ -21,7 +21,7 @@ function App() {
                 <Route path="/event/:id" element={<EventPage />} />
                 <Route
                   path="/random-coffe"
-                  element={<ProtectedRoute element={<RandomCoffePage />} />}
+                  element={<ProtectedRoute element={<RandomCoffeePage />} />}
                 />
                 <Route
                   path="/favorites"

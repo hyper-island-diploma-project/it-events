@@ -2,6 +2,7 @@ import { FC } from 'react';
 import UserModel from '../models/UserModel';
 import EventModel from '../models/EventModel';
 import useUser from '../providers/UserProvider/UserProvider.hook';
+import { BASE_URL } from '../api/userEventsApi';
 
 interface heroProfileProps {
   user: UserModel[];
@@ -18,9 +19,9 @@ const HeroProfile: FC<heroProfileProps> = ({ user, upcomingEvents }) => {
   return (
     <section className="relative my-[80px] flex w-full justify-between rounded-[20px] bg-black py-4 pl-[320px]">
       <img
-        src="/user-avatar-female.svg"
+        src={`${BASE_URL}/${user.image}`}
         alt="user avatar"
-        className="absolute -top-[42px] left-[60px] h-[200px] w-[200px]"
+        className="absolute -top-[42px] left-[60px] h-[200px] w-[200px] rounded-full object-cover"
       />
       <div className="flex flex-col text-white">
         <p className="mb-[1px] text-xl">

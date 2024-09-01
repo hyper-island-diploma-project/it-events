@@ -15,28 +15,41 @@ const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const registration = ({
-    first_name,
-    last_name,
-    email,
-    password,
-    job_title,
-    workplace,
-    experience,
-  }: RegisterModel) => {
+  // const registration = ({
+  //   first_name,
+  //   last_name,
+  //   email,
+  //   password,
+  //   job_title,
+  //   workplace,
+  //   experience,
+  //   image,
+  // }: RegisterModel) => {
+  //   userApi
+  //     .register(
+  //       first_name,
+  //       last_name,
+  //       email,
+  //       password,
+  //       job_title,
+  //       workplace,
+  //       experience,
+  //       image as File, 
+  //     )
+  //     .then((data) => {
+  //       console.log(data);
+  //       navigate('/login');
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  const registration = (formData: FormData) => {
     userApi
-      .register(
-        first_name,
-        last_name,
-        email,
-        password,
-        job_title,
-        workplace,
-        experience,
-      )
+      .register(formData)
       .then((data) => {
         console.log(data);
-        navigate('/login');
       })
       .catch((err) => {
         console.log(err);
@@ -59,6 +72,7 @@ const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
           workplace: res.user.workplace,
           experience: res.user.experience,
           id: res.user.id,
+          image: res.user.image,
         });
 
         // navigate('/dashboard');
@@ -83,6 +97,7 @@ const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
             workplace: res.user.workplace,
             experience: res.user.experience,
             id: res.user.id,
+            image: res.user.image,
           });
         })
         .catch((err) => {
@@ -103,26 +118,26 @@ const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
     navigate('/');
   };
 
-  const registerEvent = ({userId, eventId}: UserEventModel) => {
-    const tokenFromLocalStorage = localStorage.getItem('token');
-    // if (tokenFromLocalStorage) {
-      userEventApi
-        .registerEvent({userId, eventId}, tokenFromLocalStorage)
-        .then((res) => {
-          const newUserEvent: UserEventModel = {
-            id: res.id,
-            userId: res.userId,
-            eventId: res.eventId,
-            isSaved: true,
-          };
-          const updUserEventList = [...userEventList, newUserEvent];
-          setUserEventList(updUserEventList);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    // }
-  };
+  // const registerEvent = ({userId, eventId}: UserEventModel) => {
+  //   const tokenFromLocalStorage = localStorage.getItem('token');
+  //   // if (tokenFromLocalStorage) {
+  //     userEventApi
+  //       .registerEvent({userId, eventId}, tokenFromLocalStorage)
+  //       .then((res) => {
+  //         const newUserEvent: UserEventModel = {
+  //           id: res.id,
+  //           userId: res.userId,
+  //           eventId: res.eventId,
+  //           isSaved: true,
+  //         };
+  //         const updUserEventList = [...userEventList, newUserEvent];
+  //         setUserEventList(updUserEventList);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   // }
+  // };
 
   const value = {
     isLoggedIn,
@@ -131,7 +146,7 @@ const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
     login,
     checkToken,
     logOut,
-    registerEvent,
+    // registerEvent,
   };
 
   return (

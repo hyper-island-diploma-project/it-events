@@ -2,16 +2,20 @@
 import { createContext } from 'react';
 import EventModel from '../../models/EventModel';
 import UserEventModel from '../../models/UserEventModel';
+import EventUserCountsModel from '../../models/EventUserCountsModel';
 
 export interface IEventsProvider {
   getAllEvents: () => void;
-  allEvents: EventModel[]|undefined;
+  allEvents: EventModel[] | undefined;
   upcomingEvents: EventModel[];
   pastEvents: EventModel[];
   getOneEvent: (id: string) => Promise<EventModel | null>;
   getRegisteredEvents: (userId: number) => void;
   registeredEvents: UserEventModel[] | undefined;
   unregisterEvent: (userId: number, eventId: number) => void;
+  getUsersSubscriptions: () => void;
+  eventUserCounts: EventUserCountsModel[];
+  registerEvent: (data: UserEventModel) => void;
 }
 
 const EventsContext = createContext<IEventsProvider>({
@@ -23,6 +27,9 @@ const EventsContext = createContext<IEventsProvider>({
   getRegisteredEvents: () => null,
   registeredEvents: undefined,
   unregisterEvent: () => null,
+  getUsersSubscriptions: () => null,
+  eventUserCounts: [],
+  registerEvent: () => null,
 });
 
 export default EventsContext;

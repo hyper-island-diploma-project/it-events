@@ -209,7 +209,7 @@ class userController {
       req.user = decoded;
 
       const user = await User.findOne({
-        where: { id:req.user.id },
+        where: { id: req.user.id },
       });
 
       if (!user) {
@@ -226,10 +226,9 @@ class userController {
           job_title: user.job_title,
           workplace: user.workplace,
           experience: user.experience,
+          image: user.image,
         },
       });
-
-      // return res.json( { message: "Token is valid", user: req.user });
     } catch (error) {
       console.error(error);
       return next(ApiError.unauthorized("Token is invalid or expired"));

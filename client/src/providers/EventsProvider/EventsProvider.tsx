@@ -1,6 +1,8 @@
 import { useState, FC, ReactNode, useEffect } from 'react';
 import EventsProviderContext from './EventsProvider.context';
 import EventModel from '../../models/EventModel';
+import UserEventModel from '../../models/UserEventModel';
+import EventUserCountsModel from '../../models/EventUserCountsModel';
 import * as eventApi from '../../api/eventApi';
 import * as userEventApi from '../../api/userEventsApi';
 
@@ -10,13 +12,17 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [upcomingEvents, setUpcomingEvents] = useState<EventModel[]>([]);
   const [pastEvents, setPastEvents] = useState<EventModel[]>([]);
   const [registeredEvents, setRegisteredEvents] = useState<EventModel[] | []>();
-  // const [currentEvent, setCurrentEvent] = useState<EventModel | undefined>(undefined);
+  const [usersSubscriptions, setUsersSubscriptions] = useState<
+    UserEventModel | []
+  >([]);
+  const [eventUserCounts, setEventUserCounts] = useState<
+    EventUserCountsModel | []
+  >([]);
 
   const getAllEvents = async () => {
     try {
       const data = await eventApi.getEventList();
       setAllSourceEvents(data);
-      // return data;
     } catch (error) {
       console.error('Error fetching events:', error);
     }
@@ -24,16 +30,23 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     if (!allSourceEvents) return;
-
-    const updatedEventList = allSourceEvents.map((event: EventModel) => ({
-      ...event,
-      isSaved:
-        registeredEvents &&
-        registeredEvents.some((userEvent) => userEvent.eventId === event.id),
-    }));
+  
+    const updatedEventList = allSourceEvents.map((event: EventModel) => {
+      const savedEvent = registeredEvents 
+        ? registeredEvents.find((userEvent) => userEvent.eventId === event.id) 
+        : null;
+  
+      return {
+        ...event,
+        eventId: event.id,
+        isSaved: !!savedEvent,
+        id: savedEvent?.id || undefined,
+      };
+    });
+  
     setAllEvents(updatedEventList);
-    console.log(allEvents);
   }, [registeredEvents, allSourceEvents]);
+  
 
   useEffect(() => {
     const now = new Date();
@@ -67,6 +80,28 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   };
 
+  const registerEvent = ({ userId, eventId }: UserEventModel) => {
+    const tokenFromLocalStorage = localStorage.getItem('token');
+    if (tokenFromLocalStorage) {
+      userEventApi
+        .registerEvent({ userId, eventId }, tokenFromLocalStorage)
+        .then((res) => {
+          const newUserEvent: UserEventModel = {
+            id: res.id,
+            userId: res.userId,
+            eventId: res.eventId,
+            isSaved: true,
+          };
+          // Добавляем новое событие в список
+          setRegisteredEvents((prevEvents) => [...prevEvents, newUserEvent]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+  
+
   const getRegisteredEvents = (userId: number) => {
     const tokenFromLocalStorage = localStorage.getItem('token');
     if (tokenFromLocalStorage) {
@@ -74,12 +109,10 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
         .fetchAllUserEvent(userId, tokenFromLocalStorage)
         .then((res) => {
           const updatedEventList = res.map((item: EventModel) => ({
-            // ...event,
-            // isSaved: true,
-            ...item.event, // Разворачиваем данные события на верхнем уровне
-            eventId: item.eventId, // Сохраняем идентификатор события
-            id: item.id, // Сохраняем оригинальный идентификатор записи
-            userId: item.userId, // Сохраняем идентификатор пользователя
+            ...item.event,
+            eventId: item.eventId,
+            id: item.id,
+            userId: item.userId,
             isSaved: true,
           }));
           setRegisteredEvents(updatedEventList);
@@ -97,12 +130,39 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
         .unregisterEvent(id, tokenFromLocalStorage)
         .then(() => {
           setRegisteredEvents((prevEvents) => {
-            prevEvents.filter((event) => event.id !== id);
+            return prevEvents.filter((event) => event.id !== id);
           });
         })
         .catch((err) => {
           console.log(err);
         });
+    }
+  };
+
+  const getUsersSubscriptions = async () => {
+    try {
+      const subscriptions = await eventApi.getAllUsersSubscriptions();
+      setUsersSubscriptions(subscriptions);
+
+      const eventUserCount = subscriptions.reduce(
+        (acc, { eventId, userId }) => {
+          if (!acc[eventId]) {
+            acc[eventId] = new Set();
+          }
+          acc[eventId].add(userId);
+          return acc;
+        },
+        {},
+      );
+
+      const result = Object.entries(eventUserCount).map(([eventId, users]) => ({
+        eventId: Number(eventId),
+        userCount: users.size,
+      }));
+
+      setEventUserCounts(result);
+    } catch (error) {
+      console.error('Error fetching or processing event user counts:', error);
     }
   };
 
@@ -115,6 +175,9 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
     getRegisteredEvents,
     registeredEvents,
     unregisterEvent,
+    getUsersSubscriptions,
+    eventUserCounts,
+    registerEvent,
   };
 
   return (

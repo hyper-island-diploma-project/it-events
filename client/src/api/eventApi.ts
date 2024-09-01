@@ -22,3 +22,13 @@ export const getEventById = (id: number) => {
   }).then(checkResponse);
   return response;
 };
+
+export const getAllUsersSubscriptions = () => {
+  const response = fetch(`${BASE_URL}/api/event-registration`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(checkResponse);
+  return response;
+};

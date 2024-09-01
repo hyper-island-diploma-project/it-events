@@ -26,7 +26,7 @@
   }
 
   .pageName {
-    @apply mt-14 text-[16px] text-stone-400;
+    @apply mb-6 text-[16px] text-stone-400;
   }
 
   .input_auth_form {
