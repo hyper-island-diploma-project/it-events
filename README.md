@@ -43,17 +43,17 @@ As a user, you can:
 > ![](./client/src/assets/main-page.jpg)
 
 ***Event page***
-![](./client/src/assets/one-event-page-1.jpg)
+>![](./client/src/assets/one-event-page-1.jpg)
 ![](./client/src/assets/one-event-page-2.jpg)
 
 ***Registration form***
-![](./client/src/assets/registration.jpg)
+>![](./client/src/assets/registration.jpg)
 
 ***Login form***
-![](./client/src/assets/login.jpg)
+>![](./client/src/assets/login.jpg)
 
 ***Profile page***
-![](./client/src/assets/.jpg)
+>![](./client/src/assets/.jpg)
 
 
 ## Project Setup Instructions:
