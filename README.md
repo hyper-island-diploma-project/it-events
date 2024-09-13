@@ -1,7 +1,8 @@
 # IT-Events Web Application, Desktop Version, Frontend and Backend.
-MVP Individual Diploma Project as part of studies at Hyper Island.
+Individual Diploma Project as part of studies at Hyper Island.
 
 ***This is a web service for online and onsite events in the IT sphere.*** 
+
 As a user, you can:
 * Register on the platform;
 * View the list of upcoming events and the number of available onsite spots;
@@ -38,19 +39,19 @@ Auth Forms: Registration and login forms.
 
 ## Project screenshots:
 ***Start page***
-![](./frontend/src/assets/main-page.jpg)
+![](./client/src/assets/main-page.jpg)
 
 ***Dashboard page***
-![](./frontend/src/assets/one-event-page.jpg)
+![](./client/src/assets/one-event-page.jpg)
 
 ***Registration form***
-![](./frontend/src/assets/registration.jpg)
+![](./client/src/assets/registration.jpg)
 
 ***Login form***
-![](./frontend/src/assets/login.jpg)
+![](./client/src/assets/login.jpg)
 
 ***Profile page***
-![](./frontend/src/assets/.jpg)
+![](./client/src/assets/.jpg)
 
 
 ## Project Setup Instructions:
