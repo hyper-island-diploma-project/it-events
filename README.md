@@ -18,8 +18,8 @@ As a user, you can:
 ### Backend: 
 * Connected to a PostgreSQL database using Sequelize ORM, designed the schema, and created data models.
 * Routing & Endpoints:
-** Event Routes: Create, Delete, Get all, Get one
-** User Routes: Registration, Login, Profile update, Delete
+ * Event Routes: Create, Delete, Get all, Get one
+ * User Routes: Registration, Login, Profile update, Delete
 ** Host Routes: Create, Edit, Delete
 ** Event Registration Routes: Register, Cancel, View all subscriptions
 * Error Handling: Implemented global error handling for consistent error responses and logging.
