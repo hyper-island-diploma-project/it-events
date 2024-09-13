@@ -41,8 +41,11 @@ As a user, you can:
 ***Start page***
 ![](./client/src/assets/main-page.jpg)
 
-***Dashboard page***
-![](./client/src/assets/one-event-page.jpg)
+***Event page***
+![](./client/src/assets/one-event-page-1.jpg)
+
+***Event page***
+![](./client/src/assets/one-event-page-2.jpg)
 
 ***Registration form***
 ![](./client/src/assets/registration.jpg)
