@@ -20,17 +20,17 @@ As a user, you can:
 * Routing & Endpoints:
   * Event Routes: Create, Delete, Get all, Get one
   * User Routes: Registration, Login, Profile update, Delete
-  Host Routes: Create, Edit, Delete
-  Event Registration Routes: Register, Cancel, View all subscriptions
+  * Host Routes: Create, Edit, Delete
+  * Event Registration Routes: Register, Cancel, View all subscriptions
 * Error Handling: Implemented global error handling for consistent error responses and logging.
 
 ### Frontend:
 * Created REST API requests to interact with the backend.
 * Developed the following pages:
-Home Page: Displays upcoming and past events.
-Profile Page: Shows user data and saved events.
-Event Details Page: Provides detailed information about a specific event.
-Auth Forms: Registration and login forms.
+  * Home Page: Displays upcoming and past events.
+  * Profile Page: Shows user data and saved events.
+  * Event Details Page: Provides detailed information about a specific event.
+  * Auth Forms: Registration and login forms.
 * Implemented user registration and cancellation for events.
 * Implemented route protection to restrict access to certain pages.
 
