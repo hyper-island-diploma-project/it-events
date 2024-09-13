@@ -8,6 +8,7 @@ import EventPage from './pages/EventPage';
 import RandomCoffeePage from './pages/RandomCoffeePage.tsx';
 import Favorites from './pages/Favorites';
 import ProfilePage from './pages/ProfilePage.tsx';
+import ErrorPage from './pages/ErrorPage.tsx';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                   element={<ProtectedRoute element={<ProfilePage />} />}
                 />
               </Route>
+              <Route path="/error" element={<ErrorPage />} />
             </Routes>
           </EventsProvider>
         </UserProvider>

@@ -67,7 +67,7 @@ const EventRegisterButton: FC<EventProps> = ({
             }}
             className="mr-2 w-auto rounded-full border px-[14px] py-1"
           >
-            {isRegistered ? 'UNREGISTER' : 'REGISTER'}
+            {isRegistered ? 'CANCEL' : 'REGISTER'}
           </button>
           {isInfoPopupOpen && <InfoPopup isOpen={isInfoPopupOpen} />}
         </>
