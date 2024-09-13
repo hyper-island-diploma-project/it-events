@@ -40,11 +40,9 @@ As a user, you can:
 ## Project screenshots:
 
 ***Start page***
-***
-![](./client/src/assets/main-page.jpg)
+> ![](./client/src/assets/main-page.jpg)
 
 ***Event page***
-***
 ![](./client/src/assets/one-event-page-1.jpg)
 ![](./client/src/assets/one-event-page-2.jpg)
 
