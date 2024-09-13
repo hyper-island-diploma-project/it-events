@@ -38,13 +38,14 @@ As a user, you can:
 ### Website: [Visit website]()
 
 ## Project screenshots:
+
 ***Start page***
+***
 ![](./client/src/assets/main-page.jpg)
 
 ***Event page***
+***
 ![](./client/src/assets/one-event-page-1.jpg)
-
-***Event page***
 ![](./client/src/assets/one-event-page-2.jpg)
 
 ***Registration form***
