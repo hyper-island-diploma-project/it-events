@@ -8,6 +8,7 @@ export default {
       },
       colors: {
         blueAccent: '#1D6BF3',
+        accent: '#5100FF',
         black: '#1A1B22',
         blackDark: '#171717',
         yellow: '#FFDC4A',
