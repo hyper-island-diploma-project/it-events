@@ -39,6 +39,8 @@ As a user, you can:
 
 ## Project links:
 ### Website: [Visit website]()
+### GitHub: [Visit repository](https://github.com/hyper-island-diploma-project/it-events)
+<br>
 
 ## Project screenshots:
 
