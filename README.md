@@ -42,7 +42,7 @@ As a user, you can:
 
 ## Project screenshots:
 
-### ***Start page***
+### Start page
 <br>
 > ![](./client/src/assets/main-page.jpg)
 
