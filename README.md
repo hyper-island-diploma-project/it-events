@@ -10,9 +10,11 @@ As a user, you can:
 * Register for an event or cancel your registration;
 * View the events you’ve registered for in your profile.
 * In the future, I plan to add a "Random Coffee" section where users can find friends with similar interests and chat with them.
+<br>
 
 ## Tools and stack: 
 * HTML / React / TypeScript / NodeJS /  REST API / JWT / Sequelize / PostgreSQL / Tailwind CSS
+<br>
   
 ## Here's what was done:
 ### Backend: 
@@ -33,6 +35,7 @@ As a user, you can:
   * Auth Forms: Registration and login forms.
 * Implemented user registration and cancellation for events.
 * Implemented route protection to restrict access to certain pages.
+<br>
 
 ## Project links:
 ### Website: [Visit website]()
@@ -40,22 +43,64 @@ As a user, you can:
 ## Project screenshots:
 
 ***Start page***
+<br>
 > ![](./client/src/assets/main-page.jpg)
 
 ***Event page***
+<br>
 >![](./client/src/assets/one-event-page-1.jpg)
 ![](./client/src/assets/one-event-page-2.jpg)
 
 ***Registration form***
+<br>
 >![](./client/src/assets/registration.jpg)
 
 ***Login form***
+<br>
 >![](./client/src/assets/login.jpg)
 
 ***Profile page***
+<br>
 >![](./client/src/assets/.jpg)
 
+<br>
 
 ## Project Setup Instructions:
 To set up this project locally, follow the steps below:
+
+1. **Clone the Repository:**
+
+    ```bash
+    https://github.com/hyper-island-diploma-project/it-events.git
+    ```
+3. **Navigate to the Server folder:**
+
+    ```bash
+    cd server
+    ```
+4. **Running the api (backend part):**
+   
+    ```bash
+    npm run dev
+    ```
+5. **Open a new terminal window. Navigate to the Client folder:**
+
+    ```bash
+    cd client
+    ```
+
+6. **Install client dependencies:**
+
+    ```bash
+    npm install
+    ```
+7. **Running the frontend part:**
+
+    ```bash
+    npm run dev
+    ```    
+
+8. **Open web site locally**
+
+Now you can interact with the web service.
 
