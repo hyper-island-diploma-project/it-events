@@ -34,7 +34,7 @@ export const BASE_URL = API_URL;
 export const register = (formData: FormData) => {
   return fetch(`${BASE_URL}/api/user/registration`, {
     method: 'POST',
-    body: formData, // Передаем FormData
+    body: formData,
   }).then(checkResponse);
 };
 

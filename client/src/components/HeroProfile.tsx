@@ -3,6 +3,7 @@ import UserModel from '../models/UserModel';
 import EventModel from '../models/EventModel';
 import useUser from '../providers/UserProvider/UserProvider.hook';
 import { BASE_URL } from '../api/userEventsApi';
+// import useEvents from '../providers/EventsProvider/EventsProvider.hook';
 
 interface heroProfileProps {
   user: UserModel[];
@@ -11,9 +12,11 @@ interface heroProfileProps {
 
 const HeroProfile: FC<heroProfileProps> = ({ user, upcomingEvents }) => {
   const { logOut } = useUser();
-
+  // const {cleanRegisteredEvents}= useEvents();
+  
   const onLogOut = () => {
     logOut();
+    // cleanRegisteredEvents();
   };
 
   return (

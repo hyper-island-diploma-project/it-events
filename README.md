@@ -13,7 +13,7 @@ As a user, you can:
 <br>
 
 ## Tools and stack: 
-* HTML / React / TypeScript / NodeJS /  REST API / JWT / Sequelize / PostgreSQL / Tailwind CSS
+* HTML / React / TypeScript / NodeJS /  REST API / Express / JWT / Sequelize / PostgreSQL / Tailwind CSS
 <br>
   
 ## Here's what was done:
