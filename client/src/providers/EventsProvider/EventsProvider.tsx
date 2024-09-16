@@ -30,12 +30,12 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     if (!allSourceEvents) return;
-  
+
     const updatedEventList = allSourceEvents.map((event: EventModel) => {
-      const savedEvent = registeredEvents 
-        ? registeredEvents.find((userEvent) => userEvent.eventId === event.id) 
+      const savedEvent = registeredEvents
+        ? registeredEvents.find((userEvent) => userEvent.eventId === event.id)
         : null;
-  
+
       return {
         ...event,
         eventId: event.id,
@@ -43,10 +43,9 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
         id: savedEvent?.id || undefined,
       };
     });
-  
+
     setAllEvents(updatedEventList);
   }, [registeredEvents, allSourceEvents]);
-  
 
   useEffect(() => {
     const now = new Date();
@@ -86,11 +85,12 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
       userEventApi
         .registerEvent({ userId, eventId }, tokenFromLocalStorage)
         .then((res) => {
-          const newUserEvent: UserEventModel = {
-            id: res.id,
-            userId: res.userId,
-            eventId: res.eventId,
+          const currentEvent = allEvents?.find((ev) => ev.eventId === eventId);
+          if (!currentEvent) return;
+          const newUserEvent: EventModel = {
+            ...currentEvent,
             isSaved: true,
+            id: res.id,
           };
           // Добавляем новое событие в список
           setRegisteredEvents((prevEvents) => [...prevEvents, newUserEvent]);
@@ -100,9 +100,15 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
         });
     }
   };
-  
 
-  const getRegisteredEvents = (userId: number) => {
+  const cleanRegisteredEvents = () => {
+    setRegisteredEvents(undefined);
+  };
+  const getRegisteredEvents = (userId: number | null) => {
+    if (!userId) {
+      // setRegisteredEvents([]);
+      return;
+    }
     const tokenFromLocalStorage = localStorage.getItem('token');
     if (tokenFromLocalStorage) {
       userEventApi
@@ -178,6 +184,7 @@ const EventsProvider: FC<{ children: ReactNode }> = ({ children }) => {
     getUsersSubscriptions,
     eventUserCounts,
     registerEvent,
+    cleanRegisteredEvents,
   };
 
   return (

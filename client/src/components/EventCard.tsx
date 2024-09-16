@@ -79,7 +79,7 @@ const EventCard: FC<EventProps> = ({ event }) => {
         )}
         </div>
         <p className="text-[16px]">{formattedDate}</p>
-        <div className="item-center z-10 flex">
+        <div className="item-center flex">
           <EventRegisterButton
             isSaved={event.isSaved}
             event={event}

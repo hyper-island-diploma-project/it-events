@@ -10,12 +10,13 @@ export interface IEventsProvider {
   upcomingEvents: EventModel[];
   pastEvents: EventModel[];
   getOneEvent: (id: string) => Promise<EventModel | null>;
-  getRegisteredEvents: (userId: number) => void;
+  getRegisteredEvents: (userId: number|null) => void;
   registeredEvents: UserEventModel[] | undefined;
   unregisterEvent: (userId: number, eventId: number) => void;
   getUsersSubscriptions: () => void;
   eventUserCounts: EventUserCountsModel[];
   registerEvent: (data: UserEventModel) => void;
+  cleanRegisteredEvents:()=> void;
 }
 
 const EventsContext = createContext<IEventsProvider>({
@@ -30,6 +31,7 @@ const EventsContext = createContext<IEventsProvider>({
   getUsersSubscriptions: () => null,
   eventUserCounts: [],
   registerEvent: () => null,
+  cleanRegisteredEvents:()=> null
 });
 
 export default EventsContext;
